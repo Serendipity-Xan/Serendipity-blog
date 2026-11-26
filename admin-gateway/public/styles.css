@@ -403,8 +403,7 @@ button, input, textarea, select {
     font-size: 17px;
     font-weight: 700;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    flex-shrink: 0;
 }
 .topbar-subtitle {
     font-size: 12.5px;
@@ -665,8 +664,10 @@ button, input, textarea, select {
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 0.02em;
-    min-width: 34px;
-    padding: 0 7px;
+    min-width: 44px;
+    padding: 0 8px;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .admin-theme-toggle {
@@ -1420,6 +1421,8 @@ textarea {
     padding: 14px 16px;
     border-radius: 8px;
     overflow-x: auto;
+    max-width: 100%;
+    box-sizing: border-box;
     margin: 1em 0;
 }
 .md-preview pre code {

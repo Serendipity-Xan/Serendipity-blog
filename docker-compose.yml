@@ -1,7 +1,6 @@
 services:
   gateway:
     image: ${GHOST_IMAGE:-ghost:6-alpine}
-    container_name: blog-gateway
     restart: unless-stopped
     entrypoint: ["node", "/app/server.js"]
     ports:
@@ -20,7 +19,6 @@ services:
 
   ghost:
     image: ${GHOST_IMAGE:-ghost:6-alpine}
-    container_name: blog-ghost
     restart: unless-stopped
     environment:
       NODE_ENV: production
@@ -39,7 +37,6 @@ services:
 
   ghost-db:
     image: ${MYSQL_IMAGE:-mysql:8.0}
-    container_name: blog-ghost-db
     restart: unless-stopped
     command:
       - --innodb-buffer-pool-size=${MYSQL_BUFFER_POOL_SIZE:-64M}

@@ -8,108 +8,142 @@
   "hero": {
     "title": "Serendipity",
     "subtitle": "Always curious, always creating",
-    "sideNote": "Notes in code, moments in life",
-    "badge": "Serendipity · Journal",
-    "scrollLabel": "Scroll to explore"
+    "sideNote": "在雾里看代码，也在雾里看风景",
+    "badge": "Serendipity · 二次元手记",
+    "scrollLabel": "下滑阅读文章"
   },
   "home": {
-    "articlesTitle": "Articles",
-    "articlesMoreText": "All Articles",
-    "lifeTitle": "Life",
-    "toolboxTitle": "Toolbox",
-    "toolboxMoreText": "Toolbox",
+    "articlesTitle": "文章",
+    "articlesMoreText": "全部文章",
+    "lifeTitle": "生活",
+    "toolboxTitle": "工具箱",
+    "toolboxMoreText": "工具箱",
     "galleryPhotos": [
       {
         "id": "photo-1",
         "url": "/assets/images/bg/01.webp",
-        "caption": "Reunion Under the Comet",
-        "alt": "Reunion Under the Comet"
+        "caption": "彗星下的重逢",
+        "alt": "彗星下的重逢"
       },
       {
         "id": "photo-2",
         "url": "/assets/images/bg/05.webp",
-        "caption": "Comet Over the City",
-        "alt": "Comet Over the City"
+        "caption": "城市上空的彗星",
+        "alt": "城市上空的彗星"
       },
       {
         "id": "photo-3",
         "url": "/assets/images/bg/07.webp",
-        "caption": "Cloud Sea Island",
-        "alt": "Cloud Sea Island"
+        "caption": "云海孤岛",
+        "alt": "云海孤岛"
       },
       {
         "id": "photo-4",
         "url": "/assets/images/bg/10.webp",
-        "caption": "Sky Tree",
-        "alt": "Sky Tree"
+        "caption": "天空之树",
+        "alt": "天空之树"
       },
       {
         "id": "photo-5",
         "url": "/assets/images/bg/14.webp",
-        "caption": "Dusk Highway",
-        "alt": "Dusk Highway"
+        "caption": "黄昏公路",
+        "alt": "黄昏公路"
       }
     ],
     "toolboxDock": [
       {
         "id": "dock-1",
-        "label": "Shell Scripts",
+        "label": "Shell 小脚本",
         "href": "/toolbox/?tag=shell",
         "icon": "terminal"
       },
       {
         "id": "dock-2",
-        "label": "Frontend Tools",
+        "label": "前端效率工具",
         "href": "/toolbox/?tag=frontend",
         "icon": "globe"
       },
       {
         "id": "dock-3",
-        "label": "All Tools",
+        "label": "全部工具清单",
         "href": "/toolbox/#all",
         "icon": "book"
       },
       {
         "id": "dock-4",
-        "label": "Friends",
+        "label": "友链传送门",
         "href": "/links/",
         "icon": "link"
       }
     ]
   },
   "links": {
-    "hudTitle": "Friends",
-    "hudSub": "Constellation map of friendly sites and resources",
+    "hudTitle": "友链",
+    "hudSub": "星月图谱：中心明月串联友链 · 发光圆点为分类 · 悬停/点击星星显现站点图标",
     "friends": [
       {
         "id": "friend-1",
-        "name": "Ghost Official",
+        "name": "Ghost 官方",
         "url": "https://ghost.org/",
-        "desc": "The open-source publishing platform powering this blog",
+        "desc": "驱动本站内容的开源博客引擎",
         "tags": [
-          "Open Source"
+          "开源生态"
         ],
-        "cluster": "Open Source",
+        "cluster": "开源生态",
         "icon": "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='16' fill='%2315171a'/%3E%3Cpath d='M9 11h6v3H9zm8 0h6v3h-6zM9 16h14v3H9zm0 5h9v3H9z' fill='%23fff'/%3E%3C/svg%3E"
       },
       {
         "id": "friend-2",
         "name": "MDN Web Docs",
         "url": "https://developer.mozilla.org/",
-        "desc": "Web standards & API reference",
+        "desc": "Web 标准与前端 API 权威参考文档",
         "tags": [
-          "Frontend"
+          "前端开发"
         ],
-        "cluster": "Frontend",
+        "cluster": "前端开发",
         "icon": "M"
+      },
+      {
+        "id": "friend-3",
+        "name": "GitHub",
+        "url": "https://github.com/",
+        "desc": "全球开源项目与代码托管社区",
+        "tags": [
+          "开源生态"
+        ],
+        "cluster": "开源生态",
+        "icon": "✦"
+      },
+      {
+        "id": "friend-4",
+        "name": "Vite",
+        "url": "https://vite.dev/",
+        "desc": "下一代极速前端构建工具",
+        "tags": [
+          "前端开发",
+          "开源生态"
+        ],
+        "cluster": "前端开发",
+        "icon": "⚡"
+      },
+      {
+        "id": "friend-5",
+        "name": "Docker Docs",
+        "url": "https://docs.docker.com/",
+        "desc": "容器化编排与轻量化部署指南",
+        "tags": [
+          "运维部署"
+        ],
+        "cluster": "运维部署",
+        "icon": "🐳"
       }
     ]
   },
   "life": {
-    "kicker": "Life Notes",
-    "title": "Moments",
-    "subtitle": "Small notes on travel, quiet days, food, and music.",
-    "listHeading": "Recent Life Notes",
+    "kicker": "生活手记",
+    "title": "生活拾光",
+    "subtitle": "关于风景、静日、旅途与音乐的小小记录。",
+    "listHeading": "最近的生活记录",
     "tagSlugs": [
       "travel",
       "life",
@@ -119,18 +153,75 @@
       "anime"
     ],
     "pageSize": 9,
-    "albums": []
+    "albums": [
+      {
+        "id": "starlight-scenery",
+        "title": "星海风景集",
+        "coverIndex": 0,
+        "photos": [
+          {
+            "src": "/assets/images/bg/01.webp",
+            "width": 1600,
+            "height": 900,
+            "alt": "彗星下的重逢",
+            "thumbnail": "/assets/images/bg/01.webp"
+          },
+          {
+            "src": "/assets/images/bg/05.webp",
+            "width": 1600,
+            "height": 900,
+            "alt": "城市上空的彗星",
+            "thumbnail": "/assets/images/bg/05.webp"
+          },
+          {
+            "src": "/assets/images/bg/07.webp",
+            "width": 1600,
+            "height": 900,
+            "alt": "云海孤岛",
+            "thumbnail": "/assets/images/bg/07.webp"
+          }
+        ]
+      },
+      {
+        "id": "dusk-journey",
+        "title": "暮色与旅途",
+        "coverIndex": 0,
+        "photos": [
+          {
+            "src": "/assets/images/bg/10.webp",
+            "width": 1600,
+            "height": 900,
+            "alt": "天空之树",
+            "thumbnail": "/assets/images/bg/10.webp"
+          },
+          {
+            "src": "/assets/images/bg/14.webp",
+            "width": 1600,
+            "height": 900,
+            "alt": "黄昏公路",
+            "thumbnail": "/assets/images/bg/14.webp"
+          },
+          {
+            "src": "/assets/images/bg/16.webp",
+            "width": 1600,
+            "height": 900,
+            "alt": "夏日邮筒",
+            "thumbnail": "/assets/images/bg/16.webp"
+          }
+        ]
+      }
+    ]
   },
   "toolbox": {
     "tagSlug": "toolbox",
-    "allButtonText": "✦ All Tools",
-    "listHeading": "All Toolbox Posts",
-    "emptyText": "No posts tagged with toolbox yet. Tag a post in the admin console to display it here."
+    "allButtonText": "✦ 全部工具",
+    "listHeading": "全部工具文章",
+    "emptyText": "暂无带有工具箱标签的文章，在管理台给文章加上对应标签即可出现在星环里。"
   },
   "articles": {
-    "title": "Archive",
-    "allButtonText": "✦ All Posts",
-    "archiveHeading": "All Posts"
+    "title": "文章归档",
+    "allButtonText": "✦ 全站文章",
+    "archiveHeading": "全站文章"
   },
   "social": {
     "wechat": "",
@@ -143,7 +234,7 @@
     "presets": [
       {
         "id": "meteor-sky",
-        "label": "Meteor Dusk Sky · Default",
+        "label": "暮霞彗星星空 · 默认",
         "url": "/assets/images/meteor-sky-desktop.webp",
         "phone": "/assets/images/meteor-sky-mobile.webp",
         "colors": [
@@ -159,7 +250,7 @@
       },
       {
         "id": "meeting",
-        "label": "Reunion Under the Comet",
+        "label": "彗星下的重逢",
         "url": "/assets/images/bg/01.webp",
         "phone": "",
         "colors": [
@@ -175,7 +266,7 @@
       },
       {
         "id": "city",
-        "label": "Comet Over the City",
+        "label": "城市上空的彗星",
         "url": "/assets/images/bg/05.webp",
         "phone": "",
         "colors": [
@@ -191,7 +282,7 @@
       },
       {
         "id": "cloud-island",
-        "label": "Cloud Sea Island",
+        "label": "云海孤岛",
         "url": "/assets/images/bg/07.webp",
         "phone": "",
         "colors": [
@@ -207,7 +298,7 @@
       },
       {
         "id": "sky-tree",
-        "label": "Sky Tree",
+        "label": "天空之树",
         "url": "/assets/images/bg/10.webp",
         "phone": "",
         "colors": [
@@ -223,7 +314,7 @@
       },
       {
         "id": "dusk-road",
-        "label": "Dusk Highway",
+        "label": "黄昏公路",
         "url": "/assets/images/bg/14.webp",
         "phone": "",
         "colors": [
@@ -239,7 +330,7 @@
       },
       {
         "id": "summer-postbox",
-        "label": "Summer Postbox",
+        "label": "夏日邮筒",
         "url": "/assets/images/bg/16.webp",
         "phone": "",
         "colors": [

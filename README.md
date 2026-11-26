@@ -2,7 +2,27 @@
 
 A deeply customized **Ghost 6** blog featuring an anime-inspired glassmorphism theme (`anime-glass-meteor`), a **rebuilt admin console** (`admin-gateway`), and a lightweight **1C1G-friendly Docker Compose** deployment stack.
 
-[中文说明](#中文说明) · [English Guide](#english-guide)
+[中文说明](#中文说明) · [English Guide](#english-guide) · [Screenshots](#-screenshots--效果预览)
+
+---
+
+## 📸 Screenshots / 效果预览
+
+| Home Hero & Dynamic Wallpaper | Articles Orbit & Story Preview |
+| :---: | :---: |
+| ![Home Hero](docs/screenshots/home-hero.png) | ![Articles Orbit](docs/screenshots/home-articles.png) |
+
+| Photo Gallery & Toolbox Dock | Toolbox 3D Star Ring (`/toolbox/`) |
+| :---: | :---: |
+| ![Photo Gallery & Toolbox Dock](docs/screenshots/home-gallery-toolbox.png) | ![Toolbox Orbit](docs/screenshots/toolbox-orbit.png) |
+
+| Constellation Friend Links (`/links/`) | Life & Albums (`/life/`) |
+| :---: | :---: |
+| ![Friend Links Constellation](docs/screenshots/links-constellation.png) | ![Life Albums](docs/screenshots/life-albums.png) |
+
+| Admin Console (中文 Dashboard) | Split-Pane Editor (English Mode) |
+| :---: | :---: |
+| ![Admin Dashboard](docs/screenshots/admin-dashboard-zh.png) | ![Admin Editor EN](docs/screenshots/admin-editor-en.png) |
 
 ---
 

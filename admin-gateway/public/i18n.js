@@ -23,6 +23,10 @@ const EXACT_MAP = {
     '关闭侧边栏': 'Close sidebar',
     '查看博客前台': 'View Live Site',
     '查看博客前台 ↗': 'View Live Site ↗',
+    '查看前台页面 ↗': 'View Live Page ↗',
+    '加入工具箱（自动关联': 'Add to Toolbox (auto-tag',
+    '标签）': ')',
+    '封面预览': 'Cover preview',
     '打开菜单': 'Open menu',
     '站': 'A',
     '站长': 'Owner',
@@ -1057,7 +1061,7 @@ export function translateText(raw) {
 // Store original Chinese strings so toggling back EN -> zh-CN restores cleanly
 const origTextMap = new WeakMap();
 const origAttrMap = new WeakMap();
-const TRANSLATABLE_ATTRS = ['placeholder', 'title', 'aria-label'];
+const TRANSLATABLE_ATTRS = ['placeholder', 'title', 'aria-label', 'alt'];
 const SKIP_USER_DATA_SELECTOR = 'code, pre, [data-no-i18n], .tag-checkbox-pill span, .md-preview';
 
 function rememberAndApplyTextNode(node, lang) {
