@@ -1,0 +1,28 @@
+{{!< default}}
+{{#contentFor "ag-page-assets"}}
+    <link rel="stylesheet" href="{{asset "css/pearl-life.css"}}" />
+{{/contentFor}}
+
+{{#tag}}
+<header class="ag-life-intro" data-tag-slug="{{slug}}">
+    <p class="ag-life-kicker">标签归档 · 共 {{../pagination.total}} 篇</p>
+    <h1># {{name}}</h1>
+    <p>{{#if description}}{{description}}{{else}}这个标签下收录的相关手记与笔记。{{/if}}</p>
+</header>
+{{/tag}}
+
+<section class="ag-life-journal" aria-label="标签文章列表">
+    <div class="ag-life-layout">
+        <div class="ag-life-grid">
+            {{> "tag-posts"}}
+        </div>
+        <aside class="ag-life-tags-panel" aria-label="全站标签">
+            {{#tag}}{{> "life-nav" category=slug}}{{/tag}}
+        </aside>
+    </div>
+    {{#if pagination.prev}}
+        {{pagination}}
+    {{else if pagination.next}}
+        {{pagination}}
+    {{/if}}
+</section>

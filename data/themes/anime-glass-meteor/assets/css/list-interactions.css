@@ -1,0 +1,79 @@
+:is(.ag-latest-item, .ag-tree-post, .ag-tree-year > summary, .ag-tree-month > summary) {
+    min-block-size: 44px;
+    background-color: var(--ag-list-row-highlight, transparent);
+    transition: background-color 160ms ease;
+}
+
+:is(.ag-latest-item, .ag-tree-post) {
+    position: relative;
+    padding-inline-end: 32px;
+}
+
+/* 末端空间始终保留。箭头移动时，标题和元数据的位置保持固定。 */
+:is(.ag-latest-item, .ag-tree-post)::after {
+    content: "";
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-end: 14px;
+    inline-size: 8px;
+    block-size: 8px;
+    border-block-start: 2px solid var(--accent);
+    border-inline-end: 2px solid var(--accent);
+    opacity: var(--ag-list-arrow-opacity, 0);
+    transform: translate(var(--ag-list-arrow-offset, -5px), -50%) rotate(45deg);
+    transition: opacity 160ms ease, transform 160ms ease;
+    pointer-events: none;
+}
+
+:is(.ag-latest-title, .ag-tree-title) {
+    flex: 1;
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+    color: var(--ag-list-title-color, var(--ag-text));
+    transition: color 160ms ease;
+}
+
+:is(.ag-latest-date, .ag-latest-time, .ag-tree-date) {
+    font-size: 12px;
+    color: var(--ag-text-soft);
+}
+
+:is(.ag-latest-item > .ag-chip, .ag-tree-post > .ag-tree-tag) {
+    max-inline-size: 36%;
+    flex-shrink: 1;
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+:is(.ag-latest-item, .ag-tree-post, .ag-tree-year > summary, .ag-tree-month > summary):focus-visible {
+    --ag-list-row-highlight: var(--accent-soft);
+    --ag-list-title-color: var(--accent-strong);
+    --ag-list-arrow-opacity: 1;
+    --ag-list-arrow-offset: 0px;
+    outline: 2px solid var(--accent-strong);
+    outline-offset: 2px;
+}
+
+@media (hover: hover) {
+    :is(.ag-latest-item, .ag-tree-post, .ag-tree-year > summary, .ag-tree-month > summary):hover {
+        --ag-list-row-highlight: var(--accent-soft);
+        --ag-list-title-color: var(--accent-strong);
+        --ag-list-arrow-opacity: 1;
+        --ag-list-arrow-offset: 0px;
+    }
+}
+
+@media (max-width: 640px) {
+    :is(.ag-latest-item, .ag-tree-post) { flex-wrap: wrap; gap: 4px 10px; }
+    :is(.ag-latest-title, .ag-tree-title) { flex: 0 0 100%; order: -1; }
+    :is(.ag-latest-date, .ag-tree-date) { inline-size: auto; }
+    :is(.ag-latest-time, .ag-tree-date) { display: inline; }
+    :is(.ag-latest-item > .ag-chip, .ag-tree-post > .ag-tree-tag) { max-inline-size: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :is(.ag-latest-item, .ag-tree-post, .ag-tree-year > summary, .ag-tree-month > summary),
+    :is(.ag-latest-title, .ag-tree-title),
+    :is(.ag-latest-item, .ag-tree-post)::after { transition: none; }
+    :is(.ag-latest-item, .ag-tree-post)::after { transform: translateY(-50%) rotate(45deg); }
+}

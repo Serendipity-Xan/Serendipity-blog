@@ -1,0 +1,258 @@
+{
+  "admin": {
+    "title": "Serendipity",
+    "subtitle": "Admin Console",
+    "loginSubtitle": "Content & Visual Control Center",
+    "brandMark": "S"
+  },
+  "hero": {
+    "title": "Serendipity",
+    "subtitle": "Always curious, always creating",
+    "sideNote": "Notes in code, moments in life",
+    "badge": "Serendipity · Journal",
+    "scrollLabel": "Scroll to explore"
+  },
+  "home": {
+    "articlesTitle": "Articles",
+    "articlesMoreText": "All Articles",
+    "lifeTitle": "Life",
+    "toolboxTitle": "Toolbox",
+    "toolboxMoreText": "Toolbox",
+    "galleryPhotos": [
+      {
+        "id": "photo-1",
+        "url": "/assets/images/bg/01.webp",
+        "caption": "Reunion Under the Comet",
+        "alt": "Reunion Under the Comet"
+      },
+      {
+        "id": "photo-2",
+        "url": "/assets/images/bg/05.webp",
+        "caption": "Comet Over the City",
+        "alt": "Comet Over the City"
+      },
+      {
+        "id": "photo-3",
+        "url": "/assets/images/bg/07.webp",
+        "caption": "Cloud Sea Island",
+        "alt": "Cloud Sea Island"
+      },
+      {
+        "id": "photo-4",
+        "url": "/assets/images/bg/10.webp",
+        "caption": "Sky Tree",
+        "alt": "Sky Tree"
+      },
+      {
+        "id": "photo-5",
+        "url": "/assets/images/bg/14.webp",
+        "caption": "Dusk Highway",
+        "alt": "Dusk Highway"
+      }
+    ],
+    "toolboxDock": [
+      {
+        "id": "dock-1",
+        "label": "Shell Scripts",
+        "href": "/toolbox/?tag=shell",
+        "icon": "terminal"
+      },
+      {
+        "id": "dock-2",
+        "label": "Frontend Tools",
+        "href": "/toolbox/?tag=frontend",
+        "icon": "globe"
+      },
+      {
+        "id": "dock-3",
+        "label": "All Tools",
+        "href": "/toolbox/#all",
+        "icon": "book"
+      },
+      {
+        "id": "dock-4",
+        "label": "Friends",
+        "href": "/links/",
+        "icon": "link"
+      }
+    ]
+  },
+  "links": {
+    "hudTitle": "Friends",
+    "hudSub": "Constellation map of friendly sites and resources",
+    "friends": [
+      {
+        "id": "friend-1",
+        "name": "Ghost Official",
+        "url": "https://ghost.org/",
+        "desc": "The open-source publishing platform powering this blog",
+        "tags": [
+          "Open Source"
+        ],
+        "cluster": "Open Source",
+        "icon": "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='16' fill='%2315171a'/%3E%3Cpath d='M9 11h6v3H9zm8 0h6v3h-6zM9 16h14v3H9zm0 5h9v3H9z' fill='%23fff'/%3E%3C/svg%3E"
+      },
+      {
+        "id": "friend-2",
+        "name": "MDN Web Docs",
+        "url": "https://developer.mozilla.org/",
+        "desc": "Web standards & API reference",
+        "tags": [
+          "Frontend"
+        ],
+        "cluster": "Frontend",
+        "icon": "M"
+      }
+    ]
+  },
+  "life": {
+    "kicker": "Life Notes",
+    "title": "Moments",
+    "subtitle": "Small notes on travel, quiet days, food, and music.",
+    "listHeading": "Recent Life Notes",
+    "tagSlugs": [
+      "travel",
+      "life",
+      "music",
+      "food",
+      "photography",
+      "anime"
+    ],
+    "pageSize": 9,
+    "albums": []
+  },
+  "toolbox": {
+    "tagSlug": "toolbox",
+    "allButtonText": "✦ All Tools",
+    "listHeading": "All Toolbox Posts",
+    "emptyText": "No posts tagged with toolbox yet. Tag a post in the admin console to display it here."
+  },
+  "articles": {
+    "title": "Archive",
+    "allButtonText": "✦ All Posts",
+    "archiveHeading": "All Posts"
+  },
+  "social": {
+    "wechat": "",
+    "emails": [],
+    "githubUrl": "",
+    "githubLabel": ""
+  },
+  "wallpapers": {
+    "defaultId": "meteor-sky",
+    "presets": [
+      {
+        "id": "meteor-sky",
+        "label": "Meteor Dusk Sky · Default",
+        "url": "/assets/images/meteor-sky-desktop.webp",
+        "phone": "/assets/images/meteor-sky-mobile.webp",
+        "colors": [
+          "#7c8cff",
+          "#b388ff",
+          "#ff9b85"
+        ],
+        "light": [
+          0.24,
+          0.37,
+          0.15
+        ]
+      },
+      {
+        "id": "meeting",
+        "label": "Reunion Under the Comet",
+        "url": "/assets/images/bg/01.webp",
+        "phone": "",
+        "colors": [
+          "#858edd",
+          "#b69cdd",
+          "#edbaae"
+        ],
+        "light": [
+          0.27,
+          0.3,
+          0.2
+        ]
+      },
+      {
+        "id": "city",
+        "label": "Comet Over the City",
+        "url": "/assets/images/bg/05.webp",
+        "phone": "",
+        "colors": [
+          "#7faff2",
+          "#a3b8f4",
+          "#a0d5da"
+        ],
+        "light": [
+          0.08,
+          0.08,
+          0.1
+        ]
+      },
+      {
+        "id": "cloud-island",
+        "label": "Cloud Sea Island",
+        "url": "/assets/images/bg/07.webp",
+        "phone": "",
+        "colors": [
+          "#66b9ed",
+          "#a2b3f0",
+          "#efbba7"
+        ],
+        "light": [
+          0.31,
+          0.36,
+          0.2
+        ]
+      },
+      {
+        "id": "sky-tree",
+        "label": "Sky Tree",
+        "url": "/assets/images/bg/10.webp",
+        "phone": "",
+        "colors": [
+          "#76b3ed",
+          "#a3c2f7",
+          "#9ddac4"
+        ],
+        "light": [
+          0.5,
+          0.46,
+          0.46
+        ]
+      },
+      {
+        "id": "dusk-road",
+        "label": "Dusk Highway",
+        "url": "/assets/images/bg/14.webp",
+        "phone": "",
+        "colors": [
+          "#9294e2",
+          "#bf9cdc",
+          "#f6ab8b"
+        ],
+        "light": [
+          0.06,
+          0.05,
+          0.07
+        ]
+      },
+      {
+        "id": "summer-postbox",
+        "label": "Summer Postbox",
+        "url": "/assets/images/bg/16.webp",
+        "phone": "",
+        "colors": [
+          "#8ea9dd",
+          "#a9c9ad",
+          "#eac98e"
+        ],
+        "light": [
+          0.26,
+          0.12,
+          0.43
+        ]
+      }
+    ]
+  }
+}

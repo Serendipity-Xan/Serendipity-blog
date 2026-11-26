@@ -1,0 +1,9 @@
+/* Both light and dark modes preserve one continuous wallpaper without opaque center masks. */
+html:not([data-theme="dark"]) .ag-pearl-tone-layer:not([hidden]) {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    will-change: opacity;
+}
+
+html[data-theme="dark"] .ag-pearl-tone-layer { display: none; }

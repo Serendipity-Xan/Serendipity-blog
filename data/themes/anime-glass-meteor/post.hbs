@@ -1,0 +1,80 @@
+{{!< default}}
+{{!-- 文章页：珠光阅读面板，右侧自动目录（宽屏）、正文与相关阅读 --}}
+
+{{#post}}
+<article class="ag-article ag-glass ag-post-reading">
+    <header class="ag-article-head">
+        <div class="ag-article-intro">
+            <div class="ag-post-card-tags">
+                {{#foreach tags limit="3"}}
+                    <a class="ag-chip" href="{{url}}"># {{name}}</a>
+                {{/foreach}}
+                {{#if featured}}<span class="ag-badge-featured">{{> "icons/flame"}} 精选</span>{{/if}}
+            </div>
+
+            <h1 class="ag-article-title">{{title}}</h1>
+
+            {{#if custom_excerpt}}
+                <p class="ag-article-excerpt">{{custom_excerpt}}</p>
+            {{/if}}
+
+            <div class="ag-article-meta">
+                {{#foreach authors limit="1"}}
+                    <a class="ag-author" href="{{url}}">
+                        {{#if profile_image}}
+                            <img src="{{img_url profile_image size="xs"}}" alt="" width="34" height="34" />
+                        {{/if}}
+                        <span class="ag-author-text"><b>{{name}}</b></span>
+                    </a>
+                {{/foreach}}
+                <div class="ag-article-details">
+                    <time class="ag-meta-item" datetime="{{date format="YYYY-MM-DD"}}">{{date format="YYYY 年 M 月 D 日"}}</time>
+                    <span class="ag-meta-item">{{> "icons/clock"}} {{reading_time minute="1 分钟阅读" minutes="% 分钟阅读"}}</span>
+                </div>
+            </div>
+        </div>
+
+        {{#if feature_image}}
+            <figure class="ag-article-cover">
+                <img src="{{img_url feature_image size="xl"}}"
+                     srcset="{{img_url feature_image size="m"}} 600w, {{img_url feature_image size="l"}} 1000w, {{img_url feature_image size="xl"}} 2000w"
+                     sizes="(min-width: 1240px) 1100px, (min-width: 768px) 84vw, 89vw"
+                     alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
+                     loading="eager" />
+                {{#if feature_image_caption}}<figcaption>{{feature_image_caption}}</figcaption>{{/if}}
+            </figure>
+        {{/if}}
+    </header>
+
+    <div class="ag-article-body">
+        <section class="ag-content gh-content" id="ag-content">
+            {{content}}
+        </section>
+
+        {{!-- 树形目录由 anime.js 根据正文标题生成，放在正文右侧 --}}
+        <aside class="ag-toc ag-glass-soft" id="ag-toc" aria-labelledby="ag-toc-label" hidden>
+            <b id="ag-toc-label">本文目录</b>
+        </aside>
+    </div>
+
+    <footer class="ag-article-foot">
+        <div class="ag-article-tags">
+            <span>标签</span>
+            {{#foreach tags}}
+                <a class="ag-chip" href="{{url}}"># {{name}}</a>
+            {{/foreach}}
+        </div>
+    </footer>
+</article>
+
+{{#get "posts" include="tags" filter="id:-{{id}}" limit="3" order="published_at desc" as |more_posts|}}
+    {{#if more_posts}}
+        <section class="ag-section">
+            <div class="ag-section-head"><h2>读完再逛逛</h2></div>
+            <div class="ag-grid ag-grid-3">
+                {{#foreach more_posts}}{{> "post-card"}}{{/foreach}}
+            </div>
+        </section>
+    {{/if}}
+{{/get}}
+{{/post}}

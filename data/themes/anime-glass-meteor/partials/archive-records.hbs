@@ -1,0 +1,17 @@
+{{!-- Ghost caps each get page at 100 records. Reuse the same record format for every page. --}}
+{{#foreach entries}}
+    <li data-galaxy-record data-date="{{date format="YYYY-MM-DD"}}" data-date-label="{{date format="MM-DD"}}" data-month="{{date format="YYYY-MM"}}"
+        data-excerpt="{{#if custom_excerpt}}{{custom_excerpt}}{{else}}{{excerpt words="40"}}{{/if}}"
+        data-reading="{{reading_time minute="1 分钟阅读" minutes="% 分钟阅读"}}"
+        {{#if feature_image}}data-cover="{{img_url feature_image size="m"}}" data-cover-alt="{{feature_image_alt}}"{{/if}}>
+        <a href="{{url}}">{{title}}</a>
+        <time datetime="{{date format="YYYY-MM-DD"}}">{{date format="YYYY-MM-DD"}}</time>
+        <template>{{#foreach tags visibility="public" limit="4"}}<span>{{name}}</span>{{/foreach}}</template>
+    </li>
+{{/foreach}}
+
+{{#if nextPage}}
+    {{#get "posts" include="tags" limit="100" page=nextPage order="published_at desc, id desc" as |more pages|}}
+        {{> "archive-records" entries=more nextPage=pages.next}}
+    {{/get}}
+{{/if}}

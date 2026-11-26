@@ -1,0 +1,249 @@
+/* The settings directory and each subview share one native dialog and form. */
+.ag-effects-dialog.ag-settings-dialog {
+    --settings-surface: var(--pearl-display-surface);
+    --settings-edge: rgba(255, 255, 255, .74);
+    --settings-tile: rgba(255, 255, 255, .48);
+    --settings-tile-active: rgba(225, 222, 254, .76);
+    --settings-chip-start: rgba(124, 140, 255, .20);
+    --settings-chip-end: rgba(179, 136, 255, .14);
+    --settings-accent: #4d52a7;
+    --settings-scrim: rgba(27, 31, 63, .35);
+    --settings-inset: clamp(15px, calc(4 * var(--ag-vw)), 27px);
+
+    box-sizing: border-box;
+    inset: 0;
+    width: min(560px, calc(92 * var(--ag-vw)));
+    max-width: none;
+    max-height: min(680px, calc(calc(100 * var(--ag-vh)) - 24px));
+    max-height: min(680px, calc(calc(100 * var(--ag-dvh)) - 24px));
+    margin: auto;
+    padding: var(--settings-inset);
+    overflow: hidden;
+    border-color: var(--settings-edge);
+    border-radius: 20px;
+    background: var(--settings-surface);
+    color: var(--pearl-ink);
+    accent-color: var(--settings-accent);
+    -webkit-backdrop-filter: var(--pearl-display-blur);
+    backdrop-filter: var(--pearl-display-blur);
+}
+
+html[data-theme="dark"] .ag-effects-dialog.ag-settings-dialog {
+    --settings-surface: rgba(20, 28, 58, .66);
+    --settings-edge: rgba(205, 220, 255, .28);
+    --settings-tile: rgba(46, 58, 98, .50);
+    --settings-tile-active: rgba(96, 112, 178, .58);
+    --settings-chip-start: rgba(124, 140, 255, .24);
+    --settings-chip-end: rgba(179, 136, 255, .15);
+    --settings-accent: #b5beff;
+    --settings-scrim: rgba(7, 12, 29, .46);
+}
+
+.ag-settings-dialog[open] { display: flex; flex-direction: column; gap: 14px; }
+.ag-effects-dialog.ag-settings-dialog::backdrop { background: var(--settings-scrim); }
+.ag-settings-dialog [hidden] { display: none !important; }
+
+.ag-settings-dialog .ag-settings-heading {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 9px;
+    flex: none;
+    padding-inline: 3px;
+}
+
+.ag-settings-dialog .ag-settings-heading:has(.ag-settings-back:not([hidden])) {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+}
+
+.ag-effects-dialog.ag-settings-dialog .ag-settings-heading h2 {
+    margin: 0;
+    overflow-wrap: anywhere;
+    color: var(--pearl-ink);
+    font: 700 clamp(1.85rem, calc(5 * var(--ag-vw)), 2.5rem)/1.2 var(--pearl-serif);
+    text-shadow: none;
+}
+
+.ag-settings-dialog [data-settings-heading]:focus { outline: none; }
+
+.ag-settings-dialog .ag-settings-back,
+.ag-effects-dialog.ag-settings-dialog .ag-effects-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    gap: 4px;
+    border: 1px solid var(--pearl-control-edge);
+    border-radius: 11px;
+    background: var(--settings-tile);
+    color: var(--settings-accent);
+    font: 600 1.35rem/1 var(--ag-font);
+    cursor: pointer;
+}
+
+.ag-settings-dialog .ag-settings-back { padding: 0 9px 0 5px; }
+.ag-settings-dialog .ag-effects-close { width: 40px; }
+.ag-settings-dialog svg { flex: none; }
+
+.ag-effects-dialog.ag-settings-dialog .ag-effects-form {
+    display: block;
+    min-height: 0;
+    margin: 0;
+    padding: 4px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: inherit;
+    scrollbar-width: thin;
+}
+
+.ag-settings-menu,
+.ag-settings-view {
+    display: grid;
+    gap: 9px;
+}
+
+.ag-settings-dialog [data-settings-view]:not([hidden]) {
+    animation: ag-settings-enter 170ms cubic-bezier(.22, .66, .31, 1) both;
+}
+
+@keyframes ag-settings-enter {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.ag-settings-menu button {
+    display: grid;
+    grid-template-columns: 39px minmax(0, 1fr) 12px;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    min-height: 64px;
+    padding: 9px 14px 9px 10px;
+    border: 1px solid var(--settings-edge);
+    border-radius: 13px;
+    background: var(--settings-tile);
+    color: inherit;
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+}
+
+.ag-settings-menu strong { font-weight: 650; }
+
+.ag-settings-icon {
+    display: grid;
+    place-items: center;
+    width: 39px;
+    height: 39px;
+    border: 1px solid var(--settings-edge);
+    border-radius: 11px;
+    background: linear-gradient(140deg, var(--settings-chip-start), var(--settings-chip-end));
+    color: var(--settings-accent);
+}
+
+.ag-settings-chevron {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-block-start: 1.5px solid;
+    border-inline-end: 1.5px solid;
+    color: var(--settings-accent);
+    transform: rotate(45deg);
+}
+
+.ag-settings-group {
+    padding: 6px 12px;
+    border: 1px solid var(--settings-edge);
+    border-radius: 13px;
+    background: var(--settings-tile);
+}
+
+.ag-settings-toggle-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 20px;
+}
+
+.ag-settings-dialog .ag-effects-row { min-height: 44px; }
+.ag-settings-dialog .ag-effects-row input[type="checkbox"] { flex: none; }
+.ag-settings-dialog .ag-effects-tone select { width: min(17ch, 62%); min-width: 0; }
+.ag-settings-dialog .ag-effects-strength { padding-block: 5px 9px; }
+.ag-settings-dialog .ag-effects-strength input { min-height: 25px; }
+.ag-settings-atmosphere-fields {
+    min-inline-size: 0;
+    margin: 8px 0 14px;
+    padding: 0 9px 7px;
+    border: 1px solid var(--pearl-control-edge);
+    border-radius: 9px;
+}
+.ag-settings-atmosphere-fields legend { padding-inline: 4px; font-weight: 650; }
+
+.ag-settings-sliders, .ag-settings-scope-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: clamp(8px, calc(3 * var(--ag-vw)), 18px);
+}
+.ag-settings-scope-grid .ag-effects-row { gap: 6px; }
+.ag-settings-atmosphere-hint {
+    margin: 0 0 3px;
+    font-size: 1.25rem;
+    color: var(--pearl-muted);
+}
+.ag-settings-dialog .ag-effects-advanced { padding-block: 4px; }
+.ag-settings-dialog .ag-effects-advanced summary { padding-block: 8px; font-weight: 600; }
+.ag-settings-dialog .ag-effects-advanced > div { padding: 3px 0 6px; }
+.ag-settings-dialog .ag-effects-tilt { grid-column: 1 / -1; justify-self: start; }
+.ag-settings-dialog .ag-effects-footer { padding-top: 8px; border: 0; }
+
+.ag-settings-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 44px;
+    padding: 0 13px;
+    border: 1px solid var(--settings-edge);
+    border-radius: 11px;
+    background: var(--settings-tile);
+    color: var(--settings-accent);
+    font: 650 1.4rem/1.4 var(--ag-font);
+    text-align: start;
+    cursor: pointer;
+}
+.ag-settings-about { padding: 17px; }
+.ag-settings-about h3 {
+    margin: 0;
+    color: inherit;
+    font: 700 2rem/1.35 var(--pearl-serif);
+}
+.ag-settings-about p { margin: 6px 0 0; color: var(--pearl-muted); }
+.ag-settings-about a {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 40px;
+    margin-top: 6px;
+    color: var(--settings-accent);
+    font-weight: 650;
+}
+
+.ag-settings-dialog .ag-settings-menu button:focus-visible,
+.ag-settings-dialog :is(button, input, select, summary, a):focus-visible {
+    outline: 2px solid var(--settings-accent);
+    outline-offset: 2px;
+}
+
+@media (hover: hover) {
+    .ag-settings-dialog :is(.ag-settings-menu button, .ag-settings-link, .ag-settings-back, .ag-effects-close, .ag-effects-reset):hover {
+        background: var(--settings-tile-active);
+    }
+}
+
+@media (max-width: 480px) {
+    .ag-settings-toggle-grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ag-settings-dialog [data-settings-view]:not([hidden]) { animation: none; }
+}

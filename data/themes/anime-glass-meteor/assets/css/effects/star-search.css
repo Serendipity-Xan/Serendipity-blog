@@ -1,0 +1,31 @@
+#ag-cmdk-list[data-ag-star-search] .ag-cmdk-item.is-active {
+    background-image: linear-gradient(100deg, #9ca9f738, #e49bc018 46%, transparent 82%);
+    box-shadow: inset 2px 0 #bd82a9;
+}
+
+#ag-cmdk-list[data-ag-star-search] .ag-cmdk-item.is-active .ag-cmdk-ico {
+    position: relative;
+    overflow: hidden;
+    color: transparent;
+    background: #2b305d;
+}
+
+#ag-cmdk-list[data-ag-star-search] .ag-cmdk-item.is-active .ag-cmdk-ico::before {
+    content: '';
+    position: absolute;
+    inset: 5px;
+    background: #ffe7fa;
+    clip-path: polygon(50% 0, 61% 38%, 100% 50%, 61% 62%, 50% 100%, 39% 62%, 0 50%, 39% 38%);
+    transform: translate(2px, -1px);
+}
+
+#ag-cmdk-list[data-ag-star-search] .ag-cmdk-item.is-active .ag-cmdk-ico::after {
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: 14px;
+    width: 13px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #f5a9d6);
+    transform: rotate(-25deg);
+}

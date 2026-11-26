@@ -1,0 +1,118 @@
+{{!< default}}
+{{#contentFor "ag-page-assets"}}
+    <script>
+        document.documentElement.setAttribute('data-ag-archive-pending', '');
+        document.addEventListener('DOMContentLoaded', () => {
+            document.documentElement.removeAttribute('data-ag-archive-pending');
+        }, { once: true });
+    </script>
+    <link rel="stylesheet" href="{{asset "css/pearl-archive.css"}}" />
+    <script src="{{asset "js/pearl-archive.js"}}" defer></script>
+{{/contentFor}}
+
+{{!-- The server-rendered links are also the sole source for the enhanced archive. --}}
+<section class="ag-galaxy" aria-labelledby="ag-galaxy-title" data-galaxy>
+    <h1 class="ag-galaxy-sr" id="ag-galaxy-title">文章归档</h1>
+
+    {{#get "posts" include="tags" limit="100" order="published_at desc, id desc" as |entries pages|}}
+        {{#if entries}}
+            <ol class="ag-galaxy-records" data-galaxy-records>
+                {{> "archive-records" entries=entries nextPage=pages.next}}
+            </ol>
+
+            <div class="ag-galaxy-interface" data-galaxy-interface hidden>
+                <div class="ag-galaxy-window">
+                    <button type="button" class="ag-galaxy-back-arrow" data-galaxy-back aria-label="返回月份全景" title="返回星图" hidden>
+                        <span class="ag-galaxy-back-chevron" aria-hidden="true">&lt;</span>
+                        <span>返回星图</span>
+                    </button>
+                    <svg class="ag-galaxy-beam" data-galaxy-beam aria-hidden="true" hidden>
+                        <defs>
+                            <linearGradient id="ag-galaxy-beam-light" gradientUnits="userSpaceOnUse" data-galaxy-beam-gradient>
+                                <stop stop-color="#f5feff" stop-opacity=".82"/>
+                                <stop offset=".3" stop-color="#b5e6ff" stop-opacity=".42"/>
+                                <stop offset="1" stop-color="#bfeaff" stop-opacity=".12"/>
+                            </linearGradient>
+                        </defs>
+                        <path class="ag-galaxy-beam-body" data-galaxy-beam-body=""/>
+                        <path class="ag-galaxy-beam-rims" data-galaxy-beam-rims=""/>
+                        <path class="ag-galaxy-beam-axis" data-galaxy-beam-axis=""/>
+                    </svg>
+                    <div class="ag-galaxy-chart" data-galaxy-chart role="group" aria-label="月份星图">
+                        <svg class="ag-galaxy-orbits" viewBox="0 0 1000 600" preserveAspectRatio="none" aria-hidden="true">
+                            <defs>
+                                <linearGradient id="ag-galaxy-star-light" x2="70%" y2="100%">
+                                    <stop stop-color="#fff"/>
+                                    <stop offset=".45" stop-color="#dbf3ff"/>
+                                    <stop offset="1" stop-color="#85b9f3"/>
+                                </linearGradient>
+                            </defs>
+                            <ellipse cx="501" cy="303" rx="447" ry="219" transform="rotate(-15 501 303)"/>
+                            <ellipse cx="501" cy="303" rx="411" ry="154" transform="rotate(-22 501 303)"/>
+                            <path d="M-20 499C137 212 486 135 776 321S991 437 1020 310"/>
+                        </svg>
+                        <svg class="ag-galaxy-links" data-galaxy-links aria-hidden="true"></svg>
+                        <div class="ag-galaxy-points" data-galaxy-points></div>
+                    </div>
+
+                    <article class="ag-galaxy-preview" data-galaxy-preview hidden aria-labelledby="ag-galaxy-preview-title">
+                        <img class="ag-galaxy-cover" data-galaxy-cover alt="" decoding="async" hidden />
+                        <div class="ag-galaxy-preview-main">
+                            <div class="ag-galaxy-meta"><time data-galaxy-date></time><span data-galaxy-reading></span></div>
+                            <h2 id="ag-galaxy-preview-title" data-galaxy-title></h2>
+                            <p data-galaxy-excerpt></p>
+                            <ul class="ag-galaxy-tags" data-galaxy-tags aria-label="文章标签" hidden></ul>
+                            <div class="ag-galaxy-preview-actions">
+                                <div class="ag-galaxy-stack-controls" data-galaxy-stack hidden role="group" aria-label="切换当天文章">
+                                    <button type="button" data-galaxy-stack-prev aria-label="当天上一篇">‹</button>
+                                    <span data-galaxy-stack-position></span>
+                                    <button type="button" data-galaxy-stack-next aria-label="当天下一篇">›</button>
+                                    <span class="ag-galaxy-stack-hint">滚轮切换</span>
+                                </div>
+                                <a class="ag-galaxy-read" data-galaxy-read>阅读全文 <span aria-hidden="true">→</span></a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="ag-galaxy-toolbar">
+                    <div class="ag-galaxy-pages" data-galaxy-pages hidden aria-label="翻页">
+                        <button type="button" data-galaxy-prev aria-label="上一组">‹</button>
+                        <span data-galaxy-page></span>
+                        <button type="button" data-galaxy-next aria-label="下一组">›</button>
+                    </div>
+                    <button type="button" class="ag-galaxy-all-btn" data-galaxy-all>✦ 全站文章</button>
+                </div>
+                <p class="ag-galaxy-sr" data-galaxy-status role="status"></p>
+            </div>
+
+            <div class="ag-arch-view" data-arch-view hidden>
+                <header class="ag-arch-head">
+                    <div class="ag-arch-head-left">
+                        <button type="button" class="ag-arch-back" data-arch-back>&lt; 返回星图</button>
+                        <h2 data-arch-heading>全站文章</h2>
+                        <span class="ag-arch-total">共 {{pages.total}} 篇</span>
+                    </div>
+                    <div class="ag-arch-controls">
+                        <div class="ag-arch-tabs" role="tablist" aria-label="目录树模式">
+                            <button type="button" class="is-active" role="tab" aria-selected="true" data-arch-mode="time">时间目录树</button>
+                            <button type="button" role="tab" aria-selected="false" data-arch-mode="tag">标签目录树</button>
+                        </div>
+                        <div class="ag-arch-fold">
+                            <button type="button" data-arch-fold="expand">全部展开</button>
+                            <button type="button" data-arch-fold="collapse">全部收起</button>
+                        </div>
+                    </div>
+                </header>
+                <div class="ag-arch-trees">
+                    <div class="ag-arch-tree" data-arch-tree="time"></div>
+                    <div class="ag-arch-tree" data-arch-tree="tag" hidden></div>
+                </div>
+            </div>
+        {{else}}
+            <p class="ag-galaxy-empty">还没有发布文章。</p>
+        {{/if}}
+    {{else}}
+        <p class="ag-galaxy-empty">文章档案暂时无法加载。</p>
+    {{/get}}
+</section>

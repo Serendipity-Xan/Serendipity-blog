@@ -1,0 +1,30 @@
+{{#contentFor "ag-page-assets"}}
+    <link rel="stylesheet" href="{{asset "css/pearl-life.css"}}" />
+{{/contentFor}}
+
+{{#tag}}
+    <header class="ag-life-intro" data-tag-slug="{{slug}}">
+        <p class="ag-life-kicker">生活手记</p>
+        <h1>{{name}}</h1>
+        {{#if description}}<p>{{description}}</p>{{/if}}
+    </header>
+{{/tag}}
+
+<section class="ag-life-journal" aria-labelledby="ag-life-title">
+    <div class="ag-life-journal-head">
+        <h2 id="ag-life-title">最近的生活记录</h2>
+    </div>
+    <div class="ag-life-layout">
+        <div class="ag-life-grid">
+            {{> "tag-posts"}}
+        </div>
+        <aside class="ag-life-tags-panel" aria-label="全站标签">
+            {{> "life-nav" category=category isLife=true}}
+        </aside>
+    </div>
+    {{#if pagination.prev}}
+        {{pagination}}
+    {{else if pagination.next}}
+        {{pagination}}
+    {{/if}}
+</section>

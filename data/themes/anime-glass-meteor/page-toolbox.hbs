@@ -1,0 +1,68 @@
+{{!< default}}
+{{#contentFor "ag-page-assets"}}
+    <link rel="stylesheet" href="{{asset "css/pearl-toolbox.css"}}" />
+    <script src="{{asset "js/pearl-toolbox.js"}}" defer></script>
+{{/contentFor}}
+
+<section class="tb-shell">
+    {{!-- 3D 动态环绕文章星环 --}}
+    <div class="tb-orbit-stage" id="tb-orbit-stage" role="region" aria-label="动态环绕工具文章星环">
+        <svg class="tb-orbit-svg" viewBox="0 0 1280 560" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+                <linearGradient id="tb-ring-g1" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#8fa8ff" stop-opacity="0.28" />
+                    <stop offset="50%" stop-color="#e5c8ff" stop-opacity="0.92" />
+                    <stop offset="100%" stop-color="#ffa994" stop-opacity="0.38" />
+                </linearGradient>
+                <linearGradient id="tb-ring-g2" x1="100%" y1="0%" x2="0%" y2="0%">
+                    <stop offset="0%" stop-color="#82d4ff" stop-opacity="0.2" />
+                    <stop offset="50%" stop-color="#b4c4ff" stop-opacity="0.68" />
+                    <stop offset="100%" stop-color="#ffd2be" stop-opacity="0.24" />
+                </linearGradient>
+            </defs>
+            <ellipse cx="640" cy="292" rx="560" ry="178" transform="rotate(-7.5 640 292)" stroke="url(#tb-ring-g1)" stroke-width="2" fill="none" />
+            <ellipse cx="640" cy="300" rx="596" ry="194" transform="rotate(-7.5 640 300)" stroke="url(#tb-ring-g2)" stroke-width="1.1" stroke-dasharray="4 7" fill="none" />
+        </svg>
+        <div class="tb-orbit-ring" id="tb-orbit-ring"></div>
+    </div>
+
+    <button type="button" class="tb-all-btn" id="tb-all-btn">✦ 全部工具</button>
+
+    {{!-- 右下角「全部工具」：按工具子标签列出全部带 #工具箱 标签的文章 --}}
+    <section class="tb-list-view" id="tb-list-view" hidden>
+        <header class="tb-list-head">
+            <div class="tb-list-head-left">
+                <button type="button" class="tb-ctrl-btn" id="tb-list-back">← 返回星环</button>
+                <h2 id="tb-list-heading">全部工具文章</h2>
+                <span class="tb-list-total" id="tb-list-total"></span>
+            </div>
+            <div class="tb-list-fold">
+                <button type="button" class="tb-ctrl-btn" id="tb-expand-all">全部展开</button>
+                <button type="button" class="tb-ctrl-btn" id="tb-collapse-all">全部收起</button>
+            </div>
+        </header>
+        <div class="tb-filter-bar" id="tb-filter-bar" hidden></div>
+        <div id="tb-list-tree"></div>
+    </section>
+
+    {{!-- 真实 Ghost 文章数据源：仅读取带有 toolbox（工具箱）标签的文章 --}}
+    <div id="tb-records" hidden>
+        {{#get "posts" include="tags" filter="tag:toolbox" limit="100" order="published_at desc" as |tb_posts|}}
+            {{#foreach tb_posts}}
+                <article data-title="{{title}}"
+                         data-url="{{url}}"
+                         data-date="{{date format="YYYY-MM-DD"}}"
+                         data-excerpt="{{#if custom_excerpt}}{{custom_excerpt}}{{else}}{{excerpt words="36"}}{{/if}}"
+                         {{#if feature_image}}data-cover="{{img_url feature_image size="s"}}"{{/if}}>
+                    <template>
+                        {{#foreach tags visibility="public"}}
+                            {{#match slug "toolbox"}}{{else}}
+                                <span data-slug="{{slug}}">{{name}}</span>
+                            {{/match}}
+                        {{/foreach}}
+                    </template>
+                </article>
+            {{/foreach}}
+        {{/get}}
+    </div>
+</section>

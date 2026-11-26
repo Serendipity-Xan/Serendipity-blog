@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>博客管理台</title>
+    <script>
+        try {
+            if (localStorage.getItem('ag-admin-theme-v1') === 'dark') {
+                document.documentElement.dataset.adminTheme = 'dark';
+            }
+        } catch {}
+    </script>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <!-- 启动加载状态 -->
+    <div id="boot-screen" class="boot-screen">
+        <div class="boot-card">
+            <div class="spinner"></div>
+            <p>正在连接博客管理台…</p>
+        </div>
+    </div>
+
+    <!-- 登录界面 -->
+    <div id="login-screen" class="login-screen hidden">
+        <div class="login-card">
+            <div class="login-brand">
+                <div id="login-brand-mark" class="brand-mark">S</div>
+                <div class="login-brand-copy">
+                    <h1 id="login-brand-title">Serendipity · 管理台</h1>
+                    <p id="login-brand-sub">中文内容与外观控制中心</p>
+                </div>
+                <div class="login-brand-actions">
+                    <button type="button" class="icon-btn admin-lang-toggle" data-admin-lang-toggle aria-label="Switch language" title="中 / EN">EN</button>
+                    <button type="button" class="icon-btn admin-theme-toggle" data-admin-theme-toggle aria-label="夜间模式" aria-pressed="false" title="切换到夜间模式"><span aria-hidden="true">☾</span></button>
+                </div>
+            </div>
+            <form id="login-form" class="login-form" autocomplete="on">
+                <div class="field">
+                    <label for="login-email">管理员邮箱</label>
+                    <input id="login-email" name="username" type="email" required placeholder="请输入 Ghost 管理员邮箱" autocomplete="username">
+                </div>
+                <div class="field">
+                    <label for="login-password">登录密码</label>
+                    <input id="login-password" name="password" type="password" required placeholder="请输入密码" autocomplete="current-password">
+                </div>
+                <div id="login-error" class="form-error hidden"></div>
+                <button type="submit" id="login-submit" class="btn btn-primary btn-block btn-lg">登录管理台</button>
+            </form>
+            <div class="login-footer">
+                <span>使用现有 Ghost 站长账号登录，会话安全有效</span>
+                <a href="/" target="_blank" rel="noopener">返回博客前台 ↗</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主应用外壳 -->
+    <div id="app-shell" class="app-shell hidden">
+        <div id="sidebar-backdrop" class="sidebar-backdrop hidden"></div>
+        <aside id="sidebar" class="sidebar" aria-label="主导航">
+            <div class="sidebar-header">
+                <a href="#dashboard" class="sidebar-brand">
+                    <span id="sidebar-brand-mark" class="brand-mark brand-mark-sm">S</span>
+                    <div class="sidebar-brand-text">
+                        <strong id="sidebar-brand-title">Serendipity</strong>
+                        <span id="sidebar-brand-sub">中文管理台</span>
+                    </div>
+                </a>
+                <button type="button" id="sidebar-close-btn" class="icon-btn mobile-only sidebar-close-btn" aria-label="关闭侧边栏">✕</button>
+            </div>
+
+            <nav id="sidebar-nav" class="sidebar-nav"></nav>
+
+            <div class="sidebar-footer">
+                <a href="/" target="_blank" rel="noopener" class="sidebar-ext-link">
+                    <span>查看博客前台</span>
+                    <span class="ext-arrow">↗</span>
+                </a>
+            </div>
+        </aside>
+
+        <div class="app-main">
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button type="button" id="sidebar-open-btn" class="icon-btn mobile-only mobile-menu-btn" aria-label="打开菜单">☰</button>
+                    <div class="topbar-title-group">
+                        <h2 id="page-title">工作台概览</h2>
+                        <span id="page-subtitle" class="topbar-subtitle"></span>
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <div id="topbar-actions" class="topbar-actions"></div>
+                    <button type="button" class="icon-btn admin-lang-toggle" data-admin-lang-toggle aria-label="Switch language" title="中 / EN">EN</button>
+                    <button type="button" class="icon-btn admin-theme-toggle" data-admin-theme-toggle aria-label="夜间模式" aria-pressed="false" title="切换到夜间模式"><span aria-hidden="true">☾</span></button>
+                    <div class="user-chip" id="user-chip">
+                        <img id="user-avatar" class="user-avatar hidden" alt="">
+                        <span id="user-avatar-fallback" class="user-avatar-fallback" data-no-i18n>A</span>
+                        <span id="user-name" class="user-name" data-no-i18n>Owner</span>
+                    </div>
+                    <button type="button" id="logout-btn" class="btn btn-ghost btn-sm" title="退出登录">退出</button>
+                </div>
+            </header>
+
+            <main id="view-root" class="view-root"></main>
+        </div>
+    </div>
+
+    <!-- 弹窗容器 -->
+    <div id="modal-root" class="modal-root hidden" role="dialog" aria-modal="true"></div>
+
+    <!-- 轻提示容器 -->
+    <div id="toast-root" class="toast-root" aria-live="polite"></div>
+
+    <script type="module" src="./app.js"></script>
+</body>
+</html>

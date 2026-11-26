@@ -1,0 +1,59 @@
+services:
+  gateway:
+    image: ${GHOST_IMAGE:-ghost:6-alpine}
+    container_name: blog-gateway
+    restart: unless-stopped
+    entrypoint: ["node", "/app/server.js"]
+    ports:
+      - "${GATEWAY_BIND_IP:-0.0.0.0}:${GATEWAY_PORT:-8082}:8082"
+    environment:
+      PORT: "8082"
+      GHOST_INTERNAL_URL: "http://ghost:2368"
+      PUBLIC_URL: "${PUBLIC_URL:-http://localhost:8082}"
+      DATA_DIR: "/data"
+      GHOST_CONTENT_KEY: "${GHOST_CONTENT_KEY:-}"
+    volumes:
+      - ./admin-gateway:/app:ro
+      - ./data:/data
+    depends_on:
+      - ghost
+
+  ghost:
+    image: ${GHOST_IMAGE:-ghost:6-alpine}
+    container_name: blog-ghost
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      url: "${PUBLIC_URL:-http://localhost:8082}"
+      security__staffDeviceVerification: "false"
+      database__client: mysql
+      database__connection__host: ghost-db
+      database__connection__user: "${MYSQL_USER:-ghost}"
+      database__connection__password: "${MYSQL_PASSWORD:?MYSQL_PASSWORD is required}"
+      database__connection__database: "${MYSQL_DATABASE:-ghost}"
+    volumes:
+      - ./data:/var/lib/ghost/content
+    depends_on:
+      ghost-db:
+        condition: service_healthy
+
+  ghost-db:
+    image: ${MYSQL_IMAGE:-mysql:8.0}
+    container_name: blog-ghost-db
+    restart: unless-stopped
+    command:
+      - --innodb-buffer-pool-size=${MYSQL_BUFFER_POOL_SIZE:-64M}
+      - --performance-schema=OFF
+      - --max-connections=64
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD:?MYSQL_ROOT_PASSWORD is required}"
+      MYSQL_DATABASE: "${MYSQL_DATABASE:-ghost}"
+      MYSQL_USER: "${MYSQL_USER:-ghost}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD:?MYSQL_PASSWORD is required}"
+    volumes:
+      - ./mysql:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -uroot -p\"$$MYSQL_ROOT_PASSWORD\""]
+      interval: 5s
+      timeout: 5s
+      retries: 40

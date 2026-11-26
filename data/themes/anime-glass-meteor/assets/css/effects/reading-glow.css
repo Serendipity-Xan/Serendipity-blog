@@ -1,0 +1,16 @@
+.ag-progress[data-ag-reading-finish]::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: min(calc(21 * var(--ag-vw)), 150px);
+    height: 26px;
+    background: radial-gradient(ellipse at 96% 0, #fff5f8, #f699b9ad 15%, #aa82e33d 50%, transparent 72%);
+    transform-origin: right top;
+    animation: ag-reading-afterglow 780ms ease-out both;
+}
+
+@keyframes ag-reading-afterglow {
+    from { opacity: .96; transform: scale(.58); }
+    to { opacity: 0; transform: scale(1); }
+}

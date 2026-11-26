@@ -1,0 +1,88 @@
+.ag-avatar-button {
+    position: relative;
+    display: grid;
+    place-items: center;
+    flex: 0 0 40px;
+    width: 40px;
+    height: 40px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    color: inherit;
+    background: transparent;
+    cursor: pointer;
+}
+
+.ag-avatar-button:disabled { cursor: default; }
+.ag-avatar-button .ag-brand-icon { display: block; grid-area: 1 / 1; }
+.ag-avatar-button .ag-brand-icon-fallback { display: grid; }
+
+/* 月相和细光环只覆盖头像，原头像与站点标题保持不变。 */
+.ag-avatar-button::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 2px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, #e7f1ff, #f7a2cb 55%, #bfa6fd);
+    opacity: 0;
+    transform: rotate(-24deg) scale(0.82);
+    pointer-events: none;
+}
+
+.ag-avatar-button[data-ag-swapped]::after {
+    background:
+        radial-gradient(circle at 64% 38%, #26203f 26%, transparent 27%),
+        radial-gradient(circle at 51% 51%, #f7e2ff 29%, #efa8cd 31%, transparent 32%),
+        radial-gradient(circle, #26203f 62%, #9f77a9 65%, #f3bad6 69%, #b1a9fe 72%);
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+}
+
+.ag-avatar-button[data-ag-avatar-motion]::after { transition: opacity 240ms ease, transform 280ms ease; }
+
+.ag-moment-notice:not([hidden]) {
+    position: fixed;
+    inset-inline-start: max(16px, env(safe-area-inset-left));
+    inset-block-end: max(16px, env(safe-area-inset-bottom));
+    z-index: 88;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    max-width: min(440px, calc(calc(100 * var(--ag-vw)) - 32px));
+    padding: 9px 10px 9px 15px;
+    border: 1px solid #9d83ab;
+    border-inline-start: 3px solid #e9aaca;
+    border-radius: 13px;
+    background: #212844;
+    color: #f5eaff;
+    box-shadow: 0 8px 26px rgba(9, 13, 31, 0.29);
+}
+
+.ag-moment-notice p { margin: 0; font: 1.4rem/1.45 var(--ag-font); }
+.ag-moment-notice button {
+    display: grid;
+    place-items: center;
+    flex: 0 0 34px;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: 1px solid #9387ac;
+    border-radius: 50%;
+    background: #353a57;
+    color: inherit;
+    font: 600 1.8rem var(--ag-font);
+    cursor: pointer;
+}
+
+.ag-moment-notice button:focus-visible { outline: 2px solid #f7d4ef; outline-offset: 2px; }
+
+@media (max-width: 640px) {
+    .ag-avatar-button { flex-basis: 34px; width: 34px; height: 34px; }
+    .ag-moment-notice:not([hidden]) { inset-block-end: calc(max(16px, env(safe-area-inset-bottom)) + 52px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ag-avatar-button[data-ag-avatar-motion]::after { transition: none; }
+}

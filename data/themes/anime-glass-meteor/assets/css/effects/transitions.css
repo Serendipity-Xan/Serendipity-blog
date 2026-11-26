@@ -1,0 +1,40 @@
+/* 浏览器负责截屏和导航，动画只改变快照的不透明度。 */
+::view-transition { pointer-events: none; }
+::view-transition-group(root) { animation-duration: 220ms; }
+::view-transition-old(root) {
+    animation: ag-cross-document-out 190ms ease-out both;
+    mix-blend-mode: normal;
+}
+::view-transition-new(root) {
+    animation: ag-cross-document-in 220ms ease-out both;
+    mix-blend-mode: normal;
+}
+
+@keyframes ag-cross-document-out { to { opacity: 0; } }
+@keyframes ag-cross-document-in { from { opacity: 0.88; } }
+
+:root[data-ag-entry] .ag-home-kicker::before {
+    transform-origin: left center;
+    animation: ag-first-light var(--ag-entry-duration, 340ms) cubic-bezier(0.22, 0.68, 0.36, 1) both;
+}
+
+:root[data-ag-entry] .ag-article-title {
+    animation: ag-title-halo var(--ag-entry-duration, 340ms) ease-out;
+}
+
+@keyframes ag-first-light {
+    from { transform: scaleX(0.35); opacity: 0.66; }
+    to { transform: scaleX(1); opacity: 1; }
+}
+
+@keyframes ag-title-halo {
+    from { text-shadow: 0 0 14px rgba(206, 149, 211, 0.30); }
+    to { text-shadow: 0 0 0 transparent; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    ::view-transition-group(root), ::view-transition-old(root), ::view-transition-new(root),
+    :root[data-ag-entry] .ag-home-kicker::before, :root[data-ag-entry] .ag-article-title {
+        animation: none !important;
+    }
+}

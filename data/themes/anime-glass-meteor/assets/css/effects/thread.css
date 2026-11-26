@@ -1,0 +1,19 @@
+.ag-cursor-thread {
+    position: fixed;
+    inset: 0;
+    z-index: 4;
+    display: block;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.ag-cursor-thread[hidden] {
+    display: none;
+}
+
+@media (prefers-reduced-motion: reduce), (pointer: coarse) {
+    .ag-cursor-thread {
+        display: none;
+    }
+}

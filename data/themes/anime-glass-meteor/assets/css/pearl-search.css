@@ -1,0 +1,200 @@
+:root {
+    /* The panel tint keeps its text legible over every wallpaper color. */
+    --spotlight-scheme: light;
+    --spotlight-surface: rgba(248, 248, 255, .88);
+    --spotlight-solid: #f8f8ff;
+    --spotlight-ink: #1e2438;
+    --spotlight-secondary: #3b4260;
+    --spotlight-edge: rgba(255, 255, 255, .74);
+    --spotlight-line: rgba(66, 57, 112, .19);
+    --spotlight-light: rgba(255, 255, 255, .55);
+    --spotlight-chip: rgba(82, 70, 151, .1);
+    --spotlight-select: linear-gradient(105deg, #cbd3ff, #e8dcff);
+    --spotlight-focus: #44368e;
+    --spotlight-shade: rgba(24, 25, 56, .35);
+    --spotlight-shadow: 0 28px 85px rgba(28, 29, 66, .32), inset 0 1px 0 rgba(255, 255, 255, .68);
+    --spotlight-trace: linear-gradient(90deg, transparent, var(--pearl-blue) 25%, var(--pearl-lilac) 54%, var(--pearl-coral) 75%, transparent);
+}
+
+@supports (color: color-mix(in srgb, black, white)) {
+    html:not([data-theme="dark"]) {
+        --spotlight-select: linear-gradient(105deg,
+            color-mix(in srgb, var(--pearl-blue) 36%, var(--spotlight-solid)),
+            color-mix(in srgb, var(--pearl-lilac) 30%, var(--spotlight-solid)) 64%,
+            color-mix(in srgb, var(--pearl-coral) 24%, var(--spotlight-solid)));
+    }
+}
+
+html[data-theme="dark"] {
+    --spotlight-scheme: dark;
+    --spotlight-surface: rgba(24, 30, 55, .92);
+    --spotlight-solid: #181e37;
+    --spotlight-ink: #f1f3ff;
+    --spotlight-secondary: #d4dbef;
+    --spotlight-edge: rgba(218, 220, 255, .31);
+    --spotlight-line: rgba(205, 206, 255, .18);
+    --spotlight-light: rgba(196, 199, 255, .14);
+    --spotlight-chip: rgba(196, 199, 255, .14);
+    --spotlight-select: linear-gradient(105deg, #424b7e, #51436f);
+    --spotlight-focus: #d3c7ff;
+    --spotlight-shade: rgba(7, 12, 26, .53);
+    --spotlight-shadow: 0 28px 85px rgba(10, 14, 35, .48), inset 0 1px 0 rgba(230, 224, 255, .22);
+}
+
+dialog.ag-cmdk {
+    position: fixed;
+    inset: clamp(52px, calc(15 * var(--ag-svh)), 155px) 0 auto;
+    width: min(650px, calc(100% - 36px));
+    max-width: none;
+    max-height: min(calc(66 * var(--ag-svh)), 620px);
+    margin: 0 auto;
+    padding: 0;
+    overflow: hidden;
+    isolation: isolate;
+    border: 1px solid var(--spotlight-edge);
+    border-radius: 27px;
+    background: var(--spotlight-surface);
+    box-shadow: var(--spotlight-shadow);
+    color: var(--spotlight-ink);
+    color-scheme: var(--spotlight-scheme);
+    backdrop-filter: blur(24px) saturate(165%);
+    -webkit-backdrop-filter: blur(24px) saturate(165%);
+}
+
+dialog.ag-cmdk:not([open]) { display: none; }
+dialog.ag-cmdk[open] { display: flex; opacity: 1; pointer-events: auto; animation: ag-spotlight-reveal 230ms cubic-bezier(.2, .78, .3, 1) both; }
+dialog.ag-cmdk::backdrop { background: var(--spotlight-shade); }
+dialog.ag-cmdk::before {
+    position: absolute;
+    inset: 0 14% auto;
+    height: 1px;
+    background: var(--spotlight-trace);
+    pointer-events: none;
+    content: '';
+}
+
+dialog.ag-cmdk .ag-cmdk-panel {
+    width: 100%;
+    max-height: inherit;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    transform: none;
+    transition: none;
+}
+
+.ag-spotlight-field {
+    position: relative;
+    flex: none;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--spotlight-line);
+}
+
+.ag-spotlight-field::before, .ag-spotlight-field::after {
+    position: absolute;
+    color: var(--spotlight-focus);
+    pointer-events: none;
+    content: '';
+}
+
+.ag-spotlight-field::before {
+    left: 23px;
+    top: calc(50% - 10px);
+    width: 16px;
+    height: 16px;
+    border: 1.8px solid currentColor;
+    border-radius: 50%;
+}
+
+.ag-spotlight-field::after {
+    top: calc(50% + 4px);
+    left: 36px;
+    width: 8px;
+    border-bottom: 1.8px solid currentColor;
+    transform: rotate(45deg);
+    transform-origin: left;
+}
+
+dialog.ag-cmdk .ag-cmdk-input {
+    min-width: 0;
+    min-height: 66px;
+    padding: 14px 8px 14px 57px;
+    border: 0;
+    background: transparent;
+    font-size: clamp(17px, calc(2.3 * var(--ag-vw)), 22px);
+    line-height: 1.35;
+    color: var(--spotlight-ink);
+    caret-color: var(--spotlight-focus);
+}
+
+dialog.ag-cmdk .ag-cmdk-input::placeholder { color: var(--spotlight-secondary); opacity: 1; }
+.ag-spotlight-close {
+    width: 38px;
+    height: 38px;
+    margin: 0 12px 0 3px;
+    flex: none;
+    border: 1px solid var(--spotlight-line);
+    border-radius: 50%;
+    color: var(--spotlight-ink);
+    background: var(--spotlight-light);
+    font: 400 24px/1 var(--ag-font);
+    cursor: pointer;
+}
+
+.ag-spotlight-close:focus-visible { outline: 2px solid var(--spotlight-focus); outline-offset: 2px; }
+dialog.ag-cmdk .ag-cmdk-list { min-height: 0; flex: 1; padding: 9px; overscroll-behavior: contain; }
+dialog.ag-cmdk .ag-cmdk-item { min-height: 42px; padding: 7px 9px; gap: 10px; color: var(--spotlight-ink); }
+
+/* The optional star effect can decorate the icon without recoloring the selected row. */
+dialog.ag-cmdk #ag-cmdk-list .ag-cmdk-item[aria-selected="true"] {
+    background: var(--spotlight-select);
+    box-shadow: inset 2px 0 var(--spotlight-focus);
+    font-weight: 600;
+}
+dialog.ag-cmdk .ag-spotlight-result {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    color: var(--spotlight-ink);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+dialog.ag-cmdk .ag-cmdk-kind { flex: 0 0 auto; color: var(--spotlight-secondary); background: transparent; padding: 0 2px 0 0; }
+dialog.ag-cmdk .ag-cmdk-ico { width: 27px; height: 27px; background: var(--spotlight-chip); color: var(--spotlight-focus); }
+dialog.ag-cmdk .ag-cmdk-empty { color: var(--spotlight-secondary); }
+dialog.ag-cmdk .ag-cmdk-foot { flex: none; padding: 10px 15px; border-color: var(--spotlight-line); color: var(--spotlight-secondary); }
+dialog.ag-cmdk .ag-cmdk-foot kbd { color: var(--spotlight-ink); background: var(--spotlight-chip); }
+
+.ag-spotlight-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    dialog.ag-cmdk { background: var(--spotlight-solid); }
+}
+
+@keyframes ag-spotlight-reveal {
+    from { opacity: 0; transform: translateY(-9px) scale(.985); }
+    to { opacity: 1; transform: none; }
+}
+
+@media (max-width: 550px) {
+    dialog.ag-cmdk { inset-block-start: calc(8 * var(--ag-svh)); width: calc(100% - 22px); max-height: calc(74 * var(--ag-svh)); border-radius: 22px; }
+    dialog.ag-cmdk .ag-cmdk-input { min-height: 58px; }
+    dialog.ag-cmdk .ag-cmdk-kind { display: none; }
+    dialog.ag-cmdk .ag-cmdk-foot { gap: 10px; }
+    dialog.ag-cmdk .ag-cmdk-foot span:last-child { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    dialog.ag-cmdk[open] { animation: none; }
+}

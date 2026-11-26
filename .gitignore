@@ -1,0 +1,18 @@
+# Environment & secrets
+.env
+.env.*
+!.env.example
+
+# Personal database & Ghost runtime data
+mysql/
+data/*
+!/data/themes/
+!/data/site-config.example.json
+data/themes/*
+!/data/themes/anime-glass-meteor/
+
+# Logs, OS & editor files
+*.log
+.DS_Store
+Thumbs.db
+node_modules/

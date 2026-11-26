@@ -1,0 +1,141 @@
+<style>
+    :root { --ag-backdrop: url('{{asset "images/meteor-sky-desktop.webp"}}'); }
+    @media (max-width: 640px) and (orientation: portrait) {
+        :root { --ag-backdrop: url('{{asset "images/meteor-sky-mobile.webp"}}'); }
+    }
+</style>
+<script>
+    (() => {
+        const root = document.documentElement;
+        const narrow = matchMedia('(max-width: 640px) and (orientation: portrait)');
+        const choiceKey = 'ag-meteor-bg';
+        const staticDesktop = '{{asset "images/meteor-sky-desktop.webp"}}';
+        const staticMobile = '{{asset "images/meteor-sky-mobile.webp"}}';
+        const fallbackColors = ['#7c8cff', '#b388ff', '#ff9b85'];
+        const fallbackLight = [.24, .37, .15];
+
+        function read(key) {
+            try { return localStorage.getItem(key) || ''; } catch { return ''; }
+        }
+
+        // Fall back to Ghost's configured mode for browsers with the earlier theme preference.
+        const savedMode = read('ag-theme-v2');
+        const mode = savedMode === 'light' || savedMode === 'dark' ? savedMode : root.dataset.theme || 'light';
+        root.dataset.themeMode = mode;
+        root.dataset.theme = mode === 'auto' ? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : mode;
+
+        function profileValid(profile) {
+            return Array.isArray(profile) && profile.length === 3 && profile.every(value => Number.isFinite(value) && value >= 0 && value <= 1);
+        }
+
+        function colorsValid(colors) {
+            return Array.isArray(colors) && colors.length === 3 && colors.every(color => typeof color === 'string' && /^#[0-9a-f]{6}$/i.test(color));
+        }
+
+        // Each preset has a stable ID, a palette, and the relative luminance of its
+        // image, hero region, and navigation region respectively.
+        const fallbackPresets = [
+            {
+                id: 'meteor-sky', label: '暮霞彗星星空 · 默认',
+                url: staticDesktop, phone: staticMobile,
+                colors: fallbackColors, light: fallbackLight
+            },
+            { id: 'meeting', label: '彗星下的重逢', url: '{{asset "images/bg/01.webp"}}', colors: ['#858edd', '#b69cdd', '#edbaae'], light: [.27, .30, .20] },
+            { id: 'city', label: '城市上空的彗星', url: '{{asset "images/bg/05.webp"}}', colors: ['#7faff2', '#a3b8f4', '#a0d5da'], light: [.08, .08, .10] },
+            { id: 'cloud-island', label: '云海孤岛', url: '{{asset "images/bg/07.webp"}}', colors: ['#66b9ed', '#a2b3f0', '#efbba7'], light: [.31, .36, .20] },
+            { id: 'sky-tree', label: '天空之树', url: '{{asset "images/bg/10.webp"}}', colors: ['#76b3ed', '#a3c2f7', '#9ddac4'], light: [.50, .46, .46] },
+            { id: 'dusk-road', label: '黄昏公路', url: '{{asset "images/bg/14.webp"}}', colors: ['#9294e2', '#bf9cdc', '#f6ab8b'], light: [.06, .05, .07] },
+            { id: 'summer-postbox', label: '夏日邮筒', url: '{{asset "images/bg/16.webp"}}', colors: ['#8ea9dd', '#a9c9ad', '#eac98e'], light: [.26, .12, .43] }
+        ];
+
+        const wpCfg = window.__AG_SITE_CONFIG__?.wallpapers;
+        const normalizedCfgPresets = Array.isArray(wpCfg?.presets)
+            ? wpCfg.presets
+                .filter(p => p && typeof p.id === 'string' && p.id.trim() && typeof p.url === 'string' && p.url.trim())
+                .map(p => {
+                    const item = {
+                        id: p.id.trim(),
+                        label: (typeof p.label === 'string' && p.label.trim()) || p.id.trim(),
+                        url: p.url.trim(),
+                        colors: colorsValid(p.colors) ? p.colors.slice() : fallbackColors.slice(),
+                        light: profileValid(p.light) ? p.light.slice() : fallbackLight.slice()
+                    };
+                    if (typeof p.phone === 'string' && p.phone.trim()) item.phone = p.phone.trim();
+                    return item;
+                })
+            : [];
+
+        const presets = normalizedCfgPresets.length ? normalizedCfgPresets : fallbackPresets;
+        const requestedDefault = typeof wpCfg?.defaultId === 'string' ? wpCfg.defaultId.trim() : '';
+        const defaultPreset = presets.find(({id}) => id === requestedDefault) || presets[0];
+
+        function resolvePreset(stored) {
+            const path = stored.split('?')[0];
+            return presets.find(({id, url}) => id === stored || url.split('?')[0] === path) || defaultPreset;
+        }
+
+        let selected = resolvePreset(read(choiceKey));
+
+        function set(name, value) {
+            if (value) root.style.setProperty(name, value);
+            else root.style.removeProperty(name);
+        }
+
+        function paint() {
+            const url = narrow.matches && selected.phone ? selected.phone : selected.url;
+            const { colors, light } = selected;
+            const bright = region => region >= .44 || light[0] >= .55 && region >= .35;
+            const heroBright = bright(light[1]);
+            const navBright = bright(light[2]);
+            const indigo = '#1e2438';
+            const urlPath = url.split('?')[0];
+            const isStaticDefault = urlPath === staticDesktop.split('?')[0] || urlPath === staticMobile.split('?')[0];
+
+            // Always paint the resolved wallpaper URL so admin-updated defaultId/URL takes effect on frame 1.
+            set('--ag-backdrop', 'url(' + JSON.stringify(url) + ')');
+            set('--pearl-blue', colors[0]);
+            set('--pearl-lilac', colors[1]);
+            set('--pearl-coral', colors[2]);
+            set('--wallpaper-selection', 'color-mix(in srgb, ' + colors[0] + ' 38%, white)');
+            set('--wallpaper-selection-ink', indigo);
+            set('--wallpaper-hero-ink', heroBright ? indigo : '');
+            set('--wallpaper-hero-muted', heroBright ? '#363d56' : '');
+            set('--wallpaper-hero-shadow', heroBright ? '0 1px 12px #f7f7ff' : '');
+            set('--wallpaper-hero-title', heroBright ? 'linear-gradient(105deg, #252e51, #50376a 55%, #65405a)' : '');
+            set('--wallpaper-hero-veil', heroBright
+                ? 'radial-gradient(ellipse 58% 44% at 50% 84%, #f9f6ffbf, #f5efff77 58%, transparent 100%)'
+                : isStaticDefault ? '' : 'radial-gradient(ellipse 65% 49% at 50% 87%, #171c45b8, #1a23466b 60%, transparent 100%)');
+            set('--wallpaper-nav-ink', navBright ? indigo : '');
+            set('--wallpaper-nav-shadow', navBright ? '0 1px 9px #f7f7ffa6' : '');
+            set('--wallpaper-nav-veil', navBright
+                ? 'linear-gradient(#f8f6ffb3, #f8f6ff5e 62%, transparent)'
+                : isStaticDefault ? '' : 'linear-gradient(#171c458f, #171c454d 62%, transparent)');
+            return url;
+        }
+
+        function apply(choice) {
+            selected = resolvePreset(choice);
+            paint();
+            try {
+                if (selected === defaultPreset) localStorage.removeItem(choiceKey);
+                else localStorage.setItem(choiceKey, selected.id);
+            } catch {}
+        }
+
+        const image = paint();
+        narrow.addEventListener('change', paint);
+        window.agWallpaper = {
+            presets, apply,
+            get choice() { return selected.id; }
+        };
+
+        {{#is "home"}}
+        const preload = document.createElement('link');
+        preload.rel = 'preload';
+        preload.as = 'image';
+        preload.fetchPriority = 'high';
+        preload.href = image;
+        document.head.append(preload);
+        {{/is}}
+    })();
+</script>

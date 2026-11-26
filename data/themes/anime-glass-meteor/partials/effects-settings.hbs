@@ -1,0 +1,162 @@
+<dialog class="ag-effects-dialog ag-settings-dialog" id="ag-effects-settings" aria-labelledby="ag-effects-title">
+    <header class="ag-effects-heading ag-settings-heading">
+        <button type="button" class="ag-settings-back" data-settings-back hidden>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+            返回
+        </button>
+        <h2 id="ag-effects-title" data-settings-heading tabindex="-1">设置</h2>
+        <button type="button" class="ag-effects-close" data-effects-close aria-label="关闭设置">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+        </button>
+    </header>
+    <form class="ag-effects-form" aria-labelledby="ag-effects-title">
+        <nav class="ag-settings-menu" data-settings-view="menu" aria-label="设置分类">
+            <button type="button" data-settings-target="appearance" aria-controls="ag-settings-appearance">
+                <span class="ag-settings-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="15.5" cy="9" r="1.5"/><path d="m3 16 5-5 4 4 2-2 7 6"/></svg>
+                </span>
+                <strong data-settings-label>外观与壁纸</strong>
+                <span class="ag-settings-chevron" aria-hidden="true"></span>
+            </button>
+            <button type="button" data-settings-target="performance" aria-controls="ag-settings-performance">
+                <span class="ag-settings-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l2.7 7.3L22 12l-7.3 2.7L12 22l-2.7-7.3L2 12l7.3-2.7L12 2Z"/></svg>
+                </span>
+                <strong data-settings-label>特效与性能</strong>
+                <span class="ag-settings-chevron" aria-hidden="true"></span>
+            </button>
+            <button type="button" data-settings-target="about" aria-controls="ag-settings-about">
+                <span class="ag-settings-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-8h.01"/></svg>
+                </span>
+                <strong data-settings-label>关于小站</strong>
+                <span class="ag-settings-chevron" aria-hidden="true"></span>
+            </button>
+        </nav>
+        <section class="ag-settings-view" id="ag-settings-appearance" data-settings-view="appearance" aria-labelledby="ag-effects-title" hidden>
+            <div class="ag-settings-group">
+                <label class="ag-effects-row ag-effects-tone">
+                    <span>壁纸</span>
+                    <select data-wallpaper-select aria-label="壁纸" aria-describedby="ag-wallpaper-hint"></select>
+                </label>
+                <p id="ag-wallpaper-hint" class="ag-wallpaper-note">切换壁纸存在延迟，请耐心等待…</p>
+                <label class="ag-effects-strength" for="ag-reading-depth">
+                    <span>文章底衬深度</span><output for="ag-reading-depth">42%</output>
+                    <input id="ag-reading-depth" type="range" name="readingDepth" min="0" max="88" step="1" value="42" />
+                </label>
+            </div>
+            <div class="ag-settings-group">
+                <label class="ag-effects-row ag-effects-master">
+                    <span>视觉特效总开关</span>
+                    <input type="checkbox" name="enabled" checked />
+                </label>
+            </div>
+            <button type="button" class="ag-settings-link" data-settings-target="performance" aria-controls="ag-settings-performance">
+                <span data-settings-label>特效与性能</span>
+                <span class="ag-settings-chevron" aria-hidden="true"></span>
+            </button>
+        </section>
+        <section class="ag-settings-view" id="ag-settings-performance" data-settings-view="performance" aria-labelledby="ag-effects-title" hidden>
+            <div class="ag-settings-group ag-settings-toggle-grid">
+                <label class="ag-effects-row">
+                    <span>棱镜流光边框</span>
+                    <input type="checkbox" name="prism" checked />
+                </label>
+                <label class="ag-effects-row">
+                    <span>卡片 3D 倾斜</span>
+                    <input type="checkbox" name="cardTilt" checked />
+                </label>
+                <label class="ag-effects-row">
+                    <span>氛围粒子总开关</span>
+                    <input type="checkbox" name="particles" checked />
+                </label>
+                <label class="ag-effects-row">
+                    <span>点击流星涟漪</span>
+                    <input type="checkbox" name="sparks" checked />
+                </label>
+            </div>
+            <div class="ag-settings-group">
+                <label class="ag-effects-row ag-effects-tone">
+                    <span>氛围粒子</span>
+                    <select name="atmosphere">
+                        <option value="off">关闭</option>
+                        <option value="mist">微光星尘与晨雾</option>
+                        <option value="petals">樱花</option>
+                        <option value="rain" selected>细雨</option>
+                        <option value="fireflies">萤火</option>
+                    </select>
+                </label>
+                <fieldset class="ag-settings-atmosphere-fields" aria-describedby="ag-effects-threshold">
+                    <legend>特效强度</legend>
+                    <div class="ag-settings-sliders">
+                        <label class="ag-effects-strength" for="ag-effects-frequency">
+                            <span>频率</span><output for="ag-effects-frequency">70%</output>
+                            <input id="ag-effects-frequency" type="range" name="frequency" min="0" max="100" step="1" value="70" />
+                        </label>
+                        <label class="ag-effects-strength" for="ag-effects-size">
+                            <span>大小</span><output for="ag-effects-size">70%</output>
+                            <input id="ag-effects-size" type="range" name="size" min="0" max="100" step="1" value="70" />
+                        </label>
+                    </div>
+                    <p id="ag-effects-threshold" class="ag-settings-atmosphere-hint">如果频率和大小都调整至70%，有特殊彩蛋哦~</p>
+                </fieldset>
+                <fieldset class="ag-settings-atmosphere-fields">
+                    <legend>作用域</legend>
+                    <div class="ag-settings-scope-grid">
+                        <label class="ag-effects-row"><span>首页</span><input type="checkbox" name="scopeHome" checked /></label>
+                        <label class="ag-effects-row"><span>文章</span><input type="checkbox" name="scopeArchive" checked /></label>
+                        <label class="ag-effects-row"><span>生活</span><input type="checkbox" name="scopeLife" checked /></label>
+                        <label class="ag-effects-row"><span>工具箱</span><input type="checkbox" name="scopeToolbox" checked /></label>
+                        <label class="ag-effects-row"><span>关于</span><input type="checkbox" name="scopeAbout" checked /></label>
+                        <label class="ag-effects-row"><span>文章详情页</span><input type="checkbox" name="scopePost" checked /></label>
+                    </div>
+                </fieldset>
+                <details class="ag-effects-advanced">
+                    <summary>更多特效</summary>
+                    <div class="ag-settings-toggle-grid">
+                        <label class="ag-effects-row">
+                            <span>彗星掠过</span>
+                            <input type="checkbox" name="meteor" checked />
+                        </label>
+                        <label class="ag-effects-row">
+                            <span>壁纸视差</span>
+                            <input type="checkbox" name="parallax" checked />
+                        </label>
+                        <label class="ag-effects-row">
+                            <span>红绳光标</span>
+                            <input type="checkbox" name="thread" />
+                        </label>
+                        <label class="ag-effects-row">
+                            <span>彗星阅读进度</span>
+                            <input type="checkbox" name="progress" checked />
+                        </label>
+                        <label class="ag-effects-row">
+                            <span>页面转场</span>
+                            <input type="checkbox" name="transitions" checked />
+                        </label>
+                        <label class="ag-effects-row">
+                            <span>彩蛋</span>
+                            <input type="checkbox" name="easter" checked />
+                        </label>
+                        <label class="ag-effects-row">
+                            <span>读完余光</span>
+                            <input type="checkbox" name="readingGlow" checked />
+                        </label>
+                        <button type="button" class="ag-effects-reset ag-effects-tilt" data-effects-tilt aria-pressed="false" hidden>开启或关闭倾斜控制</button>
+                    </div>
+                </details>
+            </div>
+            <footer class="ag-effects-footer">
+                <p data-effects-status role="status"></p>
+                <button type="button" class="ag-effects-reset" data-effects-reset>恢复默认</button>
+            </footer>
+        </section>
+        <section class="ag-settings-view" id="ag-settings-about" data-settings-view="about" aria-labelledby="ag-effects-title" hidden>
+            <div class="ag-settings-group ag-settings-about">
+                <h3>{{@site.title}}</h3>
+                {{#if @site.description}}<p>{{@site.description}}</p>{{/if}}
+                <a href="/about/">认识站长 <span class="ag-settings-chevron" aria-hidden="true"></span></a>
+            </div>
+        </section>
+    </form>
+</dialog>

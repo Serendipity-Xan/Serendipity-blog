@@ -1,0 +1,93 @@
+/* 阅读页只强调关键字、字符串和注释。两套配色都用于深色代码底。 */
+:root {
+    --ag-syntax-keyword: #9ac7ff;
+    --ag-syntax-string: #e1b7ff;
+    --ag-syntax-comment: #a8bbd9;
+    --code-text: #e6edf8;
+    --code-bar-back: rgba(218, 227, 255, .07);
+    --code-bar-divider: rgba(218, 227, 255, .14);
+    --code-bar-text: #b9c9e8;
+    --code-copy-back: rgba(218, 227, 255, .10);
+    --code-copy-active: #394978;
+    --code-copy-ink: #e6edf8;
+    --code-shadow: 0 12px 30px rgba(56, 70, 138, .20);
+    --table-divider: #dce3f4;
+    --table-row: #fcfdff;
+}
+
+html[data-theme="dark"] {
+    --ag-syntax-keyword: #a7d1ff;
+    --ag-syntax-string: #e5c6ff;
+    --ag-syntax-comment: #acbed4;
+    --code-text: #edf2ff;
+    --code-bar-back: rgba(187, 200, 250, .09);
+    --code-bar-divider: rgba(187, 200, 250, .16);
+    --code-bar-text: #c5d2ee;
+    --code-copy-back: rgba(187, 200, 250, .12);
+    --code-copy-active: #364569;
+    --code-copy-ink: #edf2ff;
+    --code-shadow: 0 12px 30px rgba(49, 70, 144, .20);
+    --table-divider: #384569;
+    --table-row: #17223c;
+}
+
+.ag-content pre .token.keyword { color: var(--ag-syntax-keyword); }
+.ag-content pre .token.string { color: var(--ag-syntax-string); }
+.ag-content pre .token.comment { color: var(--ag-syntax-comment); }
+
+/* Casper uses a more specific selector for inline code inside .gh-content. */
+.ag-content.gh-content :not(pre) > code {
+    background: var(--accent-soft);
+    color: var(--accent-strong);
+}
+
+.page-toolbox .ag-content h2 { position: relative; }
+
+.ag-toolbox-anchor {
+    position: absolute;
+    inset-block-start: 0;
+    scroll-margin-block-start: 104px;
+}
+
+.ag-content .ag-reading-table {
+    max-inline-size: 100%;
+    margin: 1.5em 0;
+    overflow-x: auto;
+    border-radius: 12px;
+    box-shadow: inset 0 0 0 1px var(--table-divider);
+}
+
+.ag-content .ag-reading-table:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+}
+
+.ag-content .ag-reading-table > table:not(.gist table) {
+    display: table;
+    width: 100%;
+    max-width: none;
+    overflow: visible;
+    margin: 0;
+    background: none;
+}
+
+.ag-content .ag-reading-table > table:not(.gist table) :is(th, td) {
+    white-space: nowrap;
+    border-color: var(--table-divider);
+}
+
+.ag-content .ag-reading-table > table:not(.gist table) th {
+    background: var(--accent-soft);
+    color: var(--accent-strong);
+}
+
+.ag-content .ag-reading-table > table:not(.gist table) td {
+    background: var(--table-row);
+    color: var(--ag-text);
+}
+
+@media (hover: hover) {
+    .ag-content .ag-reading-table > table tbody tr:hover > :is(th, td) {
+        background: var(--accent-soft);
+    }
+}

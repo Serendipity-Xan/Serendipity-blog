@@ -1,0 +1,29 @@
+<article class="ag-life-card">
+    <a class="ag-life-card-link{{#unless feature_image}} is-text-only{{/unless}}" href="{{url}}" aria-labelledby="ag-life-card-{{id}}">
+        {{#if feature_image}}
+            <div class="ag-life-card-media">
+                <img src="{{img_url feature_image size="s"}}"
+                     srcset="{{img_url feature_image size="s"}} 300w, {{img_url feature_image size="m"}} 600w"
+                     sizes="(min-width: 1024px) 240px, (min-width: 640px) 32vw, 48vw"
+                     alt="{{feature_image_alt}}" loading="lazy" decoding="async" />
+            </div>
+            <div class="ag-life-card-info">
+                <h3 id="ag-life-card-{{id}}">{{title}}</h3>
+                <div class="ag-life-card-meta">
+                    <time datetime="{{date format="YYYY-MM-DD"}}">{{date format="MM-DD"}}</time>
+                    <span>{{reading_time minute="1 分钟阅读" minutes="% 分钟阅读"}}</span>
+                    {{#primary_tag}}<span class="ag-life-card-tag">{{name}}</span>{{/primary_tag}}
+                </div>
+            </div>
+        {{else}}
+            <div class="ag-life-card-empty">
+                <div class="ag-life-card-empty-head">
+                    {{#primary_tag}}<span class="ag-life-card-empty-tag"># {{name}}</span>{{/primary_tag}}
+                    <time datetime="{{date format="YYYY-MM-DD"}}">{{date format="MM-DD"}}</time>
+                </div>
+                <h3 id="ag-life-card-{{id}}">{{title}}</h3>
+                <p>{{#if custom_excerpt}}{{custom_excerpt}}{{else}}{{excerpt words="24"}}{{/if}}</p>
+            </div>
+        {{/if}}
+    </a>
+</article>

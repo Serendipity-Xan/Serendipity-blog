@@ -1,0 +1,33 @@
+.ag-prism-rim {
+    position: absolute;
+    z-index: 2;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    pointer-events: none;
+    opacity: 0;
+    background: radial-gradient(135px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), var(--pearl-bright), var(--pearl-lilac) 38%, transparent 77%);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    transition: opacity 210ms ease;
+}
+
+[data-ag-prism] [data-ag-pearl-active] { position: relative; }
+[data-ag-prism] .pearl-orbit[data-pearl-3d] [data-ag-pearl-active] { position: absolute; }
+[data-ag-prism] [data-ag-pearl-active] .ag-prism-rim { opacity: 1; }
+
+[data-ag-card-tilt] :is(.ag-card, .ag-featured, .ag-tool)[data-ag-pearl-active] {
+    transform: perspective(850px) rotateX(var(--pearl-tilt-x, 0deg)) rotateY(var(--pearl-tilt-y, 0deg));
+}
+
+[data-ag-card-tilt] .pearl-orbit-card[data-pearl-active] .pearl-orbit-cover img {
+    transition: transform 230ms ease;
+}
+
+[data-ag-card-tilt] .pearl-orbit-card[data-pearl-active][data-ag-pearl-active] .pearl-orbit-cover img {
+    transform: perspective(700px) rotateX(var(--pearl-tilt-x, 0deg)) rotateY(var(--pearl-tilt-y, 0deg)) scale(1.035);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ag-prism-rim { display: none !important; }
+}

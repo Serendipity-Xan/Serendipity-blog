@@ -1,0 +1,3 @@
+{{#get "posts" include="tags" filter="tag:{{tag.slug}}" order="featured desc, published_at desc, id desc" page=pagination.page limit=pagination.limit as |ordered|}}
+    {{#foreach ordered}}{{> "life-card"}}{{/foreach}}
+{{/get}}

@@ -1,0 +1,11 @@
+.ag-home-hero.ag-parallax-active::before {
+    /* Offset the clip by the same amount as the wallpaper, so the hero box stays put. */
+    inset: -10px calc(50% - calc(50 * var(--ag-vw)) - 14px);
+    clip-path: inset(
+        calc(10px - var(--ag-parallax-y, 0px))
+        calc(14px + var(--ag-parallax-x, 0px))
+        calc(10px + var(--ag-parallax-y, 0px))
+        calc(14px - var(--ag-parallax-x, 0px))
+    );
+    transform: translate3d(var(--ag-parallax-x, 0px), var(--ag-parallax-y, 0px), 0);
+}

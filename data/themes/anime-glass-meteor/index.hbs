@@ -1,0 +1,143 @@
+{{!< default}}
+
+<section class="ag-home-hero pearl-hero" aria-labelledby="ag-home-title"{{#if @custom.hero_badge}} aria-describedby="pearl-hero-badge"{{/if}}>
+    <div class="ag-home-intro pearl-hero-copy">
+        <p class="pearl-sr" id="pearl-hero-badge">{{@custom.hero_badge}}</p>
+        <h1 id="ag-home-title">Serendipity</h1>
+        <p class="ag-home-sub">Always curious, always creating</p>
+        <a class="pearl-hero-action" href="#latest" aria-label="下滑阅读文章">
+            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </a>
+    </div>
+</section>
+
+<section class="pearl-issue" id="latest" aria-labelledby="pearl-issue-title">
+    <header class="pearl-section-head">
+        <h2 id="pearl-issue-title">文章</h2>
+        <a class="pearl-section-link" href="/articles/" data-pearl-articles-more>全部文章 <svg class="pearl-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
+    </header>
+
+    {{#get "posts" include="tags" limit="10" order="featured desc, published_at desc, id desc" as |recent|}}
+        {{#if recent}}
+            <div class="pearl-feature" data-pearl-feature>
+                <div class="pearl-editorial">
+                    <p class="pearl-vertical-note" aria-hidden="true">{{#if @custom.hero_title}}{{@custom.hero_title}}{{else}}{{@site.description}}{{/if}}</p>
+                    {{#foreach recent}}
+                        <article class="pearl-story" data-pearl-story {{#unless @first}}hidden{{/unless}}>
+                            <span class="pearl-story-number" aria-hidden="true"></span>
+                            <div class="pearl-story-inner">
+                                <p class="pearl-story-meta"><time datetime="{{date format="YYYY-MM-DD"}}">{{date format="YYYY.MM.DD"}}</time><span>{{reading_time minute="1 分钟阅读" minutes="% 分钟阅读"}}</span></p>
+                                <h3><a href="{{url}}">{{title}}</a></h3>
+                                <p class="pearl-story-excerpt">{{#if custom_excerpt}}{{custom_excerpt}}{{else}}{{excerpt words="42"}}{{/if}}</p>
+                                <div class="pearl-story-tags">
+                                    {{#if featured}}<span class="pearl-story-featured">精选</span>{{/if}}
+                                    {{#foreach tags limit="3"}}<a href="{{url}}">{{name}}</a>{{/foreach}}
+                                </div>
+                                <a class="pearl-story-link" href="{{url}}">阅读全文 <svg class="pearl-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
+                            </div>
+                        </article>
+                    {{/foreach}}
+                    <output class="pearl-sr" data-pearl-orbit-status aria-live="polite"></output>
+                </div>
+
+                <div class="pearl-orbit" data-pearl-orbit aria-label="近期文章" role="region">
+                    <div class="pearl-orbit-stars" aria-hidden="true">
+                        <svg viewBox="0 0 690 350" preserveAspectRatio="none" focusable="false">
+                            <path class="pearl-orbit-echo" d="M-60 263 C 112 259, 190 42, 425 38 S 618 214, 752 151"></path>
+                            <path class="pearl-orbit-track" d="M-60 292 C 114 288, 183 56, 403 57 S 612 243, 752 173"></path>
+                            <path class="pearl-orbit-loop" d="M37 217 C140 141 527 85 648 153 C754 215 540 294 277 307 C101 313 -67 293 37 217 Z"></path>
+                        </svg>
+                    </div>
+                    <div class="pearl-orbit-cards" data-pearl-orbit-cards>
+                        {{#foreach recent}}
+                            <a class="pearl-orbit-card" data-pearl-card href="{{url}}" aria-label="{{title}}" {{#if @first}}data-pearl-active{{/if}}>
+                                <span class="pearl-orbit-cover">
+                                    {{#if feature_image}}
+                                        <img src="{{img_url feature_image size="m"}}" srcset="{{img_url feature_image size="s"}} 300w, {{img_url feature_image size="m"}} 600w" sizes="(max-width: 760px) 66vw, 380px" alt="{{feature_image_alt}}" loading="lazy" decoding="async" width="600" height="380">
+                                    {{else}}
+                                        <span class="pearl-orbit-empty">
+                                            <span class="pearl-orbit-empty-head">
+                                                {{#if primary_tag}}<span class="pearl-orbit-empty-tag"># {{primary_tag.name}}</span>{{else}}<span class="pearl-orbit-empty-tag">随笔</span>{{/if}}
+                                                <span class="pearl-orbit-empty-time">{{reading_time minute="1 分钟" minutes="% 分钟"}}</span>
+                                            </span>
+                                            <strong class="pearl-orbit-empty-title">{{title}}</strong>
+                                            <span class="pearl-orbit-empty-excerpt">{{#if custom_excerpt}}{{custom_excerpt}}{{else}}{{excerpt words="28"}}{{/if}}</span>
+                                        </span>
+                                    {{/if}}
+                                </span>
+                                <span class="pearl-orbit-caption"><time datetime="{{date format="YYYY-MM-DD"}}">{{date format="MM.DD"}}</time><span>{{title}}</span></span>
+                            </a>
+                        {{/foreach}}
+                    </div>
+                    <div class="pearl-orbit-controls" data-pearl-orbit-controls hidden>
+                        <button class="pearl-control" type="button" data-pearl-step="-1" aria-label="上一篇文章">
+                            <svg aria-hidden="true" viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13 4l-6 6 6 6"/></svg>
+                        </button>
+                        <span class="pearl-orbit-count" data-pearl-orbit-count></span>
+                        <button class="pearl-control" type="button" data-pearl-step="1" aria-label="下一篇文章">
+                            <svg aria-hidden="true" viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4l6 6-6 6"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        {{else}}
+            <p>文章发布后会在这里出现。</p>
+        {{/if}}
+    {{/get}}
+</section>
+
+<section class="pearl-photo-section" aria-labelledby="pearl-photo-title">
+    <header class="pearl-section-head">
+        <h2 id="pearl-photo-title">生活</h2>
+        <div class="pearl-photo-controls" data-pearl-photo-controls hidden>
+            <button class="pearl-control" type="button" data-pearl-photo-step="-1" aria-label="上一张照片">
+                <svg aria-hidden="true" viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13 4l-6 6 6 6"/></svg>
+            </button>
+            <button class="pearl-control" type="button" data-pearl-photo-step="1" aria-label="下一张照片">
+                <svg aria-hidden="true" viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4l6 6-6 6"/></svg>
+            </button>
+        </div>
+    </header>
+    <div class="pearl-gallery-strip" data-pearl-gallery aria-label="{{#if @custom.gallery_title}}{{@custom.gallery_title}}{{else}}生活拾光照片{{/if}}">
+        <figure class="pearl-gallery-panel"><a href="/assets/images/bg/01.webp" data-pearl-photo><img src="/assets/images/bg/01.webp" alt="彗星下的重逢" loading="eager" decoding="async" width="375" height="500"></a><figcaption>彗星下的重逢</figcaption></figure>
+        <figure class="pearl-gallery-panel"><a href="/assets/images/bg/05.webp" data-pearl-photo><img src="/assets/images/bg/05.webp" alt="城市上空的彗星" loading="eager" decoding="async" width="375" height="500"></a><figcaption>城市上空的彗星</figcaption></figure>
+        <figure class="pearl-gallery-panel"><a href="/assets/images/bg/07.webp" data-pearl-photo><img src="/assets/images/bg/07.webp" alt="云海孤岛" loading="eager" decoding="async" width="375" height="500"></a><figcaption>云海孤岛</figcaption></figure>
+        <figure class="pearl-gallery-panel"><a href="/assets/images/bg/10.webp" data-pearl-photo><img src="/content/images/bg/10.webp" alt="天空之树" loading="eager" decoding="async" width="375" height="500"></a><figcaption>天空之树</figcaption></figure>
+        <figure class="pearl-gallery-panel"><a href="/assets/images/bg/14.webp" data-pearl-photo><img src="/assets/images/bg/14.webp" alt="黄昏公路" loading="eager" decoding="async" width="375" height="500"></a><figcaption>黄昏公路</figcaption></figure>
+    </div>
+</section>
+
+<section class="pearl-dock-section" aria-labelledby="pearl-dock-title">
+    <header class="pearl-section-head">
+        <h2 id="pearl-dock-title">工具箱</h2>
+        <a class="pearl-section-link" href="/toolbox/" data-pearl-toolbox-more>工具箱 <svg class="pearl-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
+    </header>
+    <div class="pearl-dock" data-pearl-dock>
+        <a href="/toolbox/?tag=shell" class="pearl-dock-link"><span class="pearl-dock-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m7 9 3 3-3 3m6 0h4"/></svg></span><span>Shell 小脚本</span></a>
+        <a href="/toolbox/?tag=frontend" class="pearl-dock-link"><span class="pearl-dock-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="8"/><ellipse cx="12" cy="12" rx="3.5" ry="8"/><path d="M4 12h16"/></svg></span><span>前端效率工具</span></a>
+        <a href="/toolbox/#all" class="pearl-dock-link"><span class="pearl-dock-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 6a8 8 0 0 0-8-1v13a8 8 0 0 1 8 1 8 8 0 0 1 8-1V5a8 8 0 0 0-8 1Zm0 0v13"/></svg></span><span>全部工具清单</span></a>
+        <a href="/links/" class="pearl-dock-link"><span class="pearl-dock-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m9 15 6-6m-4-1 3-3a4 4 0 0 1 5 5l-3 3m-3 3-3 3a4 4 0 0 1-5-5l3-3"/></svg></span><span>友链传送门</span></a>
+    </div>
+</section>
+
+<dialog class="pearl-home-dialog" data-pearl-preview aria-labelledby="pearl-preview-title">
+    <div class="pearl-home-dialog-inner">
+        <button class="pearl-control pearl-preview-close" type="button" data-pearl-close aria-label="关闭预览" autofocus>×</button>
+        <img class="pearl-preview-image" alt="" data-pearl-media>
+        <div class="pearl-preview-copy">
+            <h2 id="pearl-preview-title"></h2>
+            <p data-pearl-preview-body hidden></p>
+            <div class="pearl-story-tags pearl-preview-tags" data-pearl-preview-tags hidden></div>
+            <a class="pearl-story-link" href="/" data-pearl-preview-link hidden>阅读全文 <svg class="pearl-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
+            <div class="pearl-preview-photos" data-pearl-preview-photos hidden>
+                <button class="pearl-control" type="button" data-pearl-preview-step="-1" aria-label="上一张照片">
+                    <svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 4l-6 6 6 6"/></svg>
+                </button>
+                <span class="pearl-preview-position" data-pearl-preview-position aria-live="polite"></span>
+                <button class="pearl-control" type="button" data-pearl-preview-step="1" aria-label="下一张照片">
+                    <svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4l6 6-6 6"/></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</dialog>

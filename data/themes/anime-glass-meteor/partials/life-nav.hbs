@@ -1,0 +1,8 @@
+<nav aria-label="全站标签">
+    {{#if isLife}}<a href="{{@site.url}}/life/">全部生活</a>{{/if}}
+    {{#get "tags" include="count.posts" order="count.posts desc" limit="all" as |all_tags|}}
+        {{#foreach all_tags}}
+            <a href="{{url}}"{{#match slug ../../category}} aria-current="page"{{/match}}># {{name}}</a>
+        {{/foreach}}
+    {{/get}}
+</nav>

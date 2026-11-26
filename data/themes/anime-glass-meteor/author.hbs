@@ -1,0 +1,50 @@
+{{!< default}}
+{{!-- 作者页：作者头像、简介与文章列表 --}}
+
+{{#author}}
+<section class="ag-hero ag-hero-small ag-glass ag-author-hero">
+    <div class="ag-hero-main">
+        <span class="ag-hero-badge">✦ 关于作者</span>
+        <div class="ag-author-head">
+            {{#if profile_image}}
+                <img class="ag-author-avatar" src="{{img_url profile_image size="s"}}" alt="{{name}}" width="84" height="84" loading="eager" decoding="async" />
+            {{/if}}
+            <div class="ag-author-identity">
+                <h1 class="ag-hero-title">{{name}}</h1>
+                {{#if bio}}<p class="ag-hero-sub">{{bio}}</p>{{/if}}
+                {{#if location}}
+                    <div class="ag-author-meta">
+                        <span class="ag-author-meta-item ag-author-location">
+                            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6-5.3-6-10a6 6 0 1 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg>
+                            <span>{{location}}</span>
+                        </span>
+                        {{#if website}}
+                            <a class="ag-author-meta-item ag-author-website" href="{{website}}" target="_blank" rel="noopener noreferrer">
+                                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3.6 9h16.8M3.6 15h16.8M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+                                <span>{{website}}</span>
+                            </a>
+                        {{/if}}
+                    </div>
+                {{else}}
+                    {{#if website}}
+                        <div class="ag-author-meta">
+                            <a class="ag-author-meta-item ag-author-website" href="{{website}}" target="_blank" rel="noopener noreferrer">
+                                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3.6 9h16.8M3.6 15h16.8M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+                                <span>{{website}}</span>
+                            </a>
+                        </div>
+                    {{/if}}
+                {{/if}}
+            </div>
+        </div>
+    </div>
+    <span class="ag-hero-watermark" aria-hidden="true">人</span>
+</section>
+{{/author}}
+
+<section class="ag-section">
+    <div class="ag-grid">
+        {{#foreach posts}}{{> "post-card"}}{{/foreach}}
+    </div>
+    {{pagination}}
+</section>

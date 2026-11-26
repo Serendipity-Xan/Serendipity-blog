@@ -1,0 +1,17 @@
+{{#if prev}}
+<nav class="ag-pagination" aria-label="分页导航">
+    <a class="ag-page-btn" href="{{page_url prev}}">← 上一页</a>
+    <span class="ag-page-info">第 {{page}} / {{pages}} 页</span>
+    {{#if next}}
+        <a class="ag-page-btn" href="{{page_url next}}">下一页 →</a>
+    {{else}}
+        <span class="ag-page-btn is-disabled" aria-disabled="true">下一页 →</span>
+    {{/if}}
+</nav>
+{{else if next}}
+<nav class="ag-pagination" aria-label="分页导航">
+    <span class="ag-page-btn is-disabled" aria-disabled="true">← 上一页</span>
+    <span class="ag-page-info">第 {{page}} / {{pages}} 页</span>
+    <a class="ag-page-btn" href="{{page_url next}}">下一页 →</a>
+</nav>
+{{/if}}

@@ -1,0 +1,51 @@
+{{!< default}}
+{{#contentFor "ag-page-assets"}}
+    <link rel="stylesheet" href="{{asset "css/pearl-life.css"}}" />
+    <link rel="stylesheet" href="{{asset "css/pearl-albums.css"}}" />
+    <script src="{{asset "js/pearl-albums.js"}}" defer></script>
+    <script src="{{asset "js/pearl-life.js"}}" defer></script>
+{{/contentFor}}
+
+<header class="ag-life-intro">
+    <a class="ag-album-back" href="/life/" aria-label="返回相册列表" data-life-album-back hidden>&lt; 返回</a>
+    <p class="ag-life-kicker" id="ag-life-kicker">生活手记</p>
+    <h1 id="ag-life-heading">生活手记</h1>
+    <p id="ag-life-subtitle">关于旅行、静日、美食与音乐的小小记录。</p>
+</header>
+
+<div class="ag-life-layout ag-life-album-layout">
+    <div>
+        <section class="ag-life-albums" data-life-albums aria-labelledby="ag-life-heading" hidden></section>
+        <section class="ag-life-journal" data-life-journal aria-labelledby="ag-life-title">
+            <div class="ag-life-journal-head">
+                <h2 id="ag-life-title">最近的生活记录</h2>
+            </div>
+            {{#get "posts" include="tags" filter="tag:[travel,life,music]" limit="9" order="published_at desc" as |life_posts|}}
+                <div class="ag-life-grid" id="ag-life-grid">
+                    {{#foreach life_posts}}{{> "life-card"}}{{/foreach}}
+                </div>
+            {{/get}}
+            <script>(function(){var p=parseInt(new URLSearchParams(location.search).get('page')||'1',10);if(p>1){var g=document.getElementById('ag-life-grid');if(g){g.style.opacity='0';g.setAttribute('aria-busy','true');}}})();</script>
+            <nav class="ag-pagination" id="ag-life-pagination" aria-label="分页导航" hidden></nav>
+        </section>
+    </div>
+    <aside class="ag-life-tags-panel" aria-label="全站标签">
+        {{> "life-nav"}}
+    </aside>
+</div>
+
+<dialog class="ag-album-viewer" data-life-album-viewer aria-labelledby="ag-album-viewer-title">
+    <header class="ag-album-viewer-bar">
+        <h2 id="ag-album-viewer-title"></h2>
+        <button class="ag-album-control" type="button" data-album-close aria-label="关闭照片预览" autofocus>×</button>
+    </header>
+    <img class="ag-album-viewer-image" data-album-image alt="" />
+    <footer class="ag-album-viewer-bar ag-album-viewer-footer">
+        <div class="ag-album-viewer-navigation" data-album-navigation>
+            <button class="ag-album-control" type="button" data-album-step="-1" aria-label="上一张照片">‹</button>
+            <span class="ag-album-position" data-album-position aria-live="polite" aria-atomic="true"></span>
+            <button class="ag-album-control" type="button" data-album-step="1" aria-label="下一张照片">›</button>
+        </div>
+    </footer>
+</dialog>
+

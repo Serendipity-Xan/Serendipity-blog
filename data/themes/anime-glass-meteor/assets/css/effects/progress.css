@@ -1,0 +1,32 @@
+.ag-progress[data-ag-comet-progress] {
+    height: 4px;
+    background:
+        repeating-linear-gradient(120deg, #9a2949 0 4px, #e986a2 4px 6px, #b84163 6px 9px),
+        #a43c5a;
+}
+
+.ag-progress[data-ag-comet-progress] i {
+    background: linear-gradient(90deg, #a63251, #ff8eaa 70%, #fcd8dd);
+    opacity: .88;
+}
+
+.ag-reading-comet:not([hidden]) {
+    position: absolute;
+    top: 2px;
+    left: clamp(4px, calc(var(--ag-reading-progress, 0) * 100%), calc(100% - 5px));
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #fff3f8;
+    box-shadow: 0 0 5px 2px #ffb8cc, 0 0 15px 4px #ff6c9c90;
+    transform: translate(-50%, -50%);
+}
+
+.ag-reading-comet::before {
+    content: '';
+    position: absolute;
+    inset: 2px 4px 2px auto;
+    width: clamp(0px, calc(var(--ag-reading-progress, 0) * calc(100 * var(--ag-vw))), 46px);
+    border-radius: 50%;
+    background: linear-gradient(90deg, transparent, #ffc7de);
+}

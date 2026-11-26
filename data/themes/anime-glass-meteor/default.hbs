@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+{{!-- 整站骨架：背景、页头、主内容区、页脚与快速跳转面板。 --}}
+<html lang="zh-CN"{{#match @custom.color_scheme "Dark"}} data-theme="dark"{{else match @custom.color_scheme "Auto"}} data-theme="auto"{{else}} data-theme="light"{{/match}}>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>{{meta_title}}</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {{> "wallpaper-head"}}
+    <script>
+        // 同源页面需在首帧前声明转场权限。实际导航由浏览器处理。
+        (() => {
+            let preferences;
+            try { preferences = JSON.parse(localStorage.getItem('ag-effects-v1')); } catch {}
+            const defaults = window.__AG_SITE_CONFIG__?.effects;
+            if ((preferences?.enabled ?? defaults?.enabled) !== false
+                && (preferences?.transitions ?? defaults?.transitions) !== false && preferences?.intensity !== 0
+                && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                const transition = document.createElement('style');
+                transition.id = 'ag-native-transition';
+                transition.textContent = '@view-transition { navigation: auto; }';
+                document.head.append(transition);
+            }
+        })();
+    </script>
+
+    <link rel="preload" as="style" href="{{asset "built/screen.css"}}" />
+    <link rel="stylesheet" type="text/css" href="{{asset "built/screen.css"}}" />
+    <link rel="stylesheet" type="text/css" href="{{asset "css/anime.css"}}" />
+    <link rel="stylesheet" href="{{asset "css/header-gallery.css"}}" />
+    <link rel="stylesheet" href="{{asset "css/list-interactions.css"}}" />
+    <link rel="stylesheet" href="{{asset "css/reading-components.css"}}" />
+    <link rel="stylesheet" href="{{asset "css/effects/settings.css"}}" />
+    <link rel="stylesheet" href="{{asset "css/effects/sky.css"}}" />
+    <link rel="stylesheet" href="{{asset "css/effects/atmosphere.css"}}" />
+    <link rel="stylesheet" href="{{asset "css/pearl.css"}}" />
+    <link rel="stylesheet" href="{{asset "css/pearl-settings.css"}}" />
+    <link rel="stylesheet" href="{{asset "css/pearl-reading.css"}}" />
+    {{{block "ag-page-assets"}}}
+    {{#is "home"}}
+        <link rel="stylesheet" href="{{asset "css/pearl-home.css"}}" />
+    {{/is}}
+
+    {{ghost_head exclude="portal,cta_styles,admin_toolbar"}}
+</head>
+<body class="{{body_class}}" id="ag-top">
+
+{{!-- 首屏和内页共用所选背景。候选图在切换时加载。 --}}
+<div class="ag-bg" aria-hidden="true">
+    <div class="ag-bg-image" id="ag-bg"></div>
+    <div class="ag-bg-veil"></div>
+</div>
+<div class="ag-nav-shield" aria-hidden="true"></div>
+<div class="ag-viewport">
+
+    <header class="ag-header">
+        <div class="ag-brand-lockup">
+            <a class="ag-brand" href="{{@site.url}}">
+            <span class="ag-brand-text">
+                <strong>{{@site.title}}</strong>
+            </span>
+            </a>
+        </div>
+
+        <nav class="ag-nav" id="ag-nav" aria-label="主导航">
+            {{navigation}}
+        </nav>
+
+        <div class="ag-actions">
+            <button class="ag-icon-btn ag-appearance-trigger" type="button" aria-label="设置" title="设置" aria-haspopup="dialog" aria-controls="ag-effects-settings" commandfor="ag-effects-settings" command="show-modal">
+                <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3.1"/><path d="m10 3-.6 2.5-2 .9-2.2-1.2-2 3.4 1.8 1.7v2.4l-1.8 1.7 2 3.4 2.2-1.1 2 .9.6 2.4h4l.6-2.4 2-.9 2.2 1.1 2-3.4-1.8-1.7v-2.4l1.8-1.7-2-3.4-2.2 1.2-2-.9L14 3z"/></svg>
+            </button>
+            <button class="ag-icon-btn ag-theme-toggle" type="button" aria-label="切换明暗主题" title="切换明暗主题">
+                <span class="ag-sun">{{> "icons/sun"}}</span>
+                <span class="ag-moon">{{> "icons/moon"}}</span>
+            </button>
+            <button class="ag-burger" type="button" aria-label="主导航菜单" aria-expanded="false" aria-controls="ag-nav"><span></span></button>
+        </div>
+        {{#is "post"}}
+            <div class="ag-progress ag-nav-progress" aria-hidden="true"><i></i><span class="ag-reading-comet" hidden></span></div>
+        {{/is}}
+    </header>
+
+    <main class="ag-main">
+        {{{body}}}
+    </main>
+
+    <footer class="ag-footer ag-glass">
+        <span class="ag-footer-credit">{{@site.title}}</span>
+        <nav class="ag-footer-nav" aria-label="页脚导航">
+            {{navigation type="secondary"}}
+        </nav>
+        <div class="ag-footer-social">
+            <button type="button" class="ag-social-trigger" data-ag-social="wechat" aria-label="微信联系" title="微信">{{> "icons/wechat"}}</button>
+            <button type="button" class="ag-social-trigger" data-ag-social="mail" aria-label="邮箱联系" title="邮箱">{{> "icons/mail"}}</button>
+            <button type="button" class="ag-social-trigger" data-ag-social="github" aria-label="GitHub 主页" title="GitHub">{{> "icons/github"}}</button>
+        </div>
+        <a class="ag-footer-top-link" href="#ag-top" aria-label="回到顶部" title="回到顶部">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5 14.7 9.3 21.5 12 14.7 14.7 12 21.5 9.3 14.7 2.5 12 9.3 9.3Z"/></svg>
+        </a>
+    </footer>
+
+</div>
+
+{{!-- 微信 / 邮箱快捷联系弹窗 --}}
+<dialog class="ag-social-dialog" id="ag-social-dialog" aria-labelledby="ag-social-dialog-title">
+    <div class="ag-social-panel">
+        <div class="ag-social-head">
+            <h2 id="ag-social-dialog-title"></h2>
+            <button type="button" class="ag-social-close" data-ag-social-close aria-label="关闭">×</button>
+        </div>
+        <div class="ag-social-body" id="ag-social-dialog-body"></div>
+    </div>
+</dialog>
+
+<canvas class="ag-sky-effects" aria-hidden="true" hidden></canvas>
+{{> "effects-settings"}}
+<template id="ag-effects-modules">
+    <span data-feature="pearlMotion" data-source="{{asset "js/effects/pearl-motion.js"}}" data-style="{{asset "css/effects/pearl-motion.css"}}" data-mount="mountPearlMotion"></span>
+    <span data-feature="parallax" data-source="{{asset "js/effects/parallax.js"}}" data-style="{{asset "css/effects/parallax.css"}}" data-mount="mountParallax" data-page=".ag-home-hero"></span>
+    <span data-feature="thread" data-source="{{asset "js/effects/thread.js"}}" data-style="{{asset "css/effects/thread.css"}}" data-mount="mountCursorThread" data-fine-only="true"></span>
+    <span data-feature="progress" data-source="{{asset "js/effects/progress.js"}}" data-style="{{asset "css/effects/progress.css"}}" data-mount="mountCometProgress" data-page=".post-template #ag-content"></span>
+    <span data-feature="transitions" data-source="{{asset "js/effects/transitions.js"}}" data-style="{{asset "css/effects/transitions.css"}}" data-mount="mountTransitions"></span>
+    <span data-feature="easter" data-source="{{asset "js/effects/easter-eggs.js"}}" data-style="{{asset "css/effects/easter-eggs.css"}}" data-mount="mountEasterEggs"></span>
+    <span data-feature="readingGlow" data-source="{{asset "js/effects/reading-glow.js"}}" data-style="{{asset "css/effects/reading-glow.css"}}" data-mount="mountReadingGlow" data-page=".post-template #ag-content"></span>
+</template>
+<script type="module">
+    import { mountEffectsSettings } from '{{asset "js/effects/settings.js"}}';
+    import { mountSkyEffects } from '{{asset "js/effects/sky.js"}}';
+    import { createEffectsFrames, mountOptionalEffects } from '{{asset "js/effects/runtime.js"}}';
+    import { mountAtmosphere } from '{{asset "js/effects/atmosphere.js"}}';
+    const settings = mountEffectsSettings();
+    if (settings) {
+        const frames = createEffectsFrames();
+        let atmosphereMounted = false;
+        settings.subscribe(policy => {
+            if (policy.atmosphereEnabled && !atmosphereMounted) {
+                atmosphereMounted = true;
+                mountAtmosphere(settings, frames);
+            }
+        });
+        mountSkyEffects(settings, frames);
+        mountOptionalEffects(settings, frames);
+    }
+</script>
+<script src="{{asset "js/anime.js"}}" defer></script>
+<script src="{{asset "js/pearl-shell.js"}}" defer></script>
+{{#is "home"}}
+    <script src="{{asset "js/pearl-home.js"}}" defer></script>
+{{/is}}
+{{#is "post,page"}}
+    <script src="{{asset "js/lib/prism-reading.min.js"}}" defer></script>
+    <script src="{{asset "js/reading-components.js"}}" defer></script>
+{{/is}}
+<script src="{{asset "js/wallpaper.js"}}" defer></script>
+{{ghost_foot}}
+</body>
+</html>

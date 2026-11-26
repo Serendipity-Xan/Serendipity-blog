@@ -1,0 +1,500 @@
+/* 友链 · 双模式无框透明宇宙（方案 B 物理不规则星座 + 星月关系图谱） */
+.page-links .ag-bg-veil { background: transparent !important; }
+.page-links .ag-bg-veil::after { opacity: 0 !important; }
+
+.ag-links-shell {
+    width: min(1320px, calc(100% - 24px));
+    margin: 4px auto 40px;
+    color: #f4f7ff;
+}
+
+/* 无框透明舞台 */
+.ag-graph-stage {
+    position: relative;
+    width: 100%;
+    height: clamp(520px, calc(74 * var(--ag-vh)), 710px);
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    overflow: visible;
+    user-select: none;
+    touch-action: none;
+}
+
+.ag-graph-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.ag-graph-hud {
+    position: absolute;
+    left: 14px;
+    top: 12px;
+    z-index: 7;
+    pointer-events: none;
+}
+
+.ag-graph-hud h1 {
+    margin: 0;
+    font: 700 clamp(2.2rem, calc(2.5 * var(--ag-vw)), 3rem)/1.2 var(--pearl-serif);
+    color: #fff;
+    text-shadow: 0 2px 14px rgba(10, 16, 40, 0.85), 0 0 24px rgba(10, 16, 40, 0.45);
+}
+
+.ag-graph-hud p {
+    margin: 5px 0 0;
+    font-size: 1.24rem;
+    color: rgba(242, 247, 255, 0.92);
+    text-shadow: 0 1px 10px rgba(10, 16, 40, 0.88);
+}
+
+/* 右上角毛玻璃操作条 & 视图切换胶囊 */
+.ag-graph-actions {
+    position: absolute;
+    right: 14px;
+    top: 12px;
+    z-index: 8;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.ag-mode-switch {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px;
+    border-radius: 999px;
+    border: 1px solid var(--pearl-header-edge);
+    background: var(--pearl-header-surface);
+    backdrop-filter: var(--pearl-header-blur);
+    -webkit-backdrop-filter: var(--pearl-header-blur);
+    box-shadow: var(--pearl-header-shadow);
+}
+
+.ag-mode-tab {
+    border: 0;
+    background: transparent;
+    color: rgba(240, 246, 255, 0.82);
+    padding: 5px 12px;
+    border-radius: 999px;
+    font: 600 1.18rem/1.2 var(--ag-font);
+    text-shadow: var(--pearl-header-text-shadow);
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+.ag-mode-tab:hover { color: #fff; }
+.ag-mode-tab.is-active {
+    background: var(--pearl-hero-nav-active);
+    color: #fff;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.34);
+}
+
+.ag-graph-btn {
+    border: 1px solid var(--pearl-header-edge);
+    background: var(--pearl-header-surface);
+    backdrop-filter: var(--pearl-header-blur);
+    -webkit-backdrop-filter: var(--pearl-header-blur);
+    color: var(--pearl-nav-ink);
+    text-shadow: var(--pearl-header-text-shadow);
+    box-shadow: var(--pearl-header-shadow);
+    border-radius: 999px;
+    padding: 7px 15px;
+    font: 600 1.2rem/1.2 var(--pearl-mono);
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+}
+.ag-graph-btn:hover { background: var(--pearl-hero-nav-hover); transform: translateY(-1px); }
+.ag-graph-btn[hidden] { display: none; }
+
+.ag-const-back-btn {
+    position: absolute;
+    left: 14px;
+    top: 84px;
+    z-index: 8;
+}
+
+/* ---------- 模式一：方案 B · 实时物理不规则星座 ---------- */
+.ag-const-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    pointer-events: none;
+}
+.ag-const-overlay[hidden] { display: none; }
+
+.ag-const-node {
+    position: absolute;
+    left: 0;
+    top: 0;
+    pointer-events: auto;
+    cursor: grab;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    transform: translate3d(var(--nx, 0px), var(--ny, 0px), 0) translate(-50%, -50%) scale(var(--ns, 1));
+    opacity: var(--no, 1);
+    z-index: var(--nz, 10);
+    transition: opacity 0.28s ease;
+    will-change: transform, opacity;
+}
+.ag-const-node:active { cursor: grabbing; }
+.ag-const-node.is-hidden { pointer-events: none; opacity: 0 !important; }
+.ag-const-node.is-dim { opacity: 0.28 !important; }
+
+/* 星座星体：默认展现亮星光芒，悬停 / 选中时绽放自定义图标徽章 */
+.ag-const-star-shell {
+    position: relative;
+    width: 36px;
+    height: 36px;
+    display: grid;
+    place-items: center;
+}
+
+.ag-const-star-spark {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    transition: transform 0.26s ease, opacity 0.24s ease;
+    filter: drop-shadow(0 0 10px var(--orb-glow, rgba(164, 198, 255, 0.9)));
+}
+.ag-const-star-spark svg { width: 28px; height: 28px; display: block; }
+
+.ag-const-orb {
+    position: relative;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: var(--orb-bg);
+    border: 1.5px solid rgba(255, 255, 255, 0.88);
+    box-shadow: 0 0 22px var(--orb-glow), inset 0 1px 2px rgba(255, 255, 255, 0.82);
+    opacity: 0;
+    transform: scale(0.42);
+    transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.22s ease;
+    overflow: hidden;
+}
+.ag-const-orb img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: block; }
+.ag-const-glyph { font: 700 1.25rem/1 var(--pearl-mono); color: #fff; text-shadow: 0 1px 4px rgba(8, 14, 38, 0.82); }
+
+.ag-const-node:hover .ag-const-star-spark,
+.ag-const-node.is-selected .ag-const-star-spark {
+    opacity: 0;
+    transform: scale(1.35) rotate(18deg);
+}
+.ag-const-node:hover .ag-const-orb,
+.ag-const-node.is-selected .ag-const-orb {
+    opacity: 1;
+    transform: scale(1.08);
+}
+
+.ag-const-pill {
+    cursor: pointer;
+    padding: 7px 15px;
+    border-radius: 999px;
+    border: 1px solid rgba(215, 232, 255, 0.28);
+    background: var(--pearl-header-surface);
+    backdrop-filter: blur(14px) saturate(150%);
+    -webkit-backdrop-filter: blur(14px) saturate(150%);
+    box-shadow: 0 6px 20px rgba(4, 10, 28, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+    transition: background-color 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+}
+.ag-const-pill:hover,
+.ag-const-pill.is-hot {
+    background: rgba(124, 152, 255, 0.34);
+    border-color: rgba(235, 244, 255, 0.65);
+    box-shadow: 0 0 24px rgba(138, 174, 255, 0.45);
+}
+
+.ag-const-name {
+    font: 600 1.24rem/1.2 var(--ag-font);
+    color: #fff;
+    white-space: nowrap;
+    text-shadow: 0 1px 8px rgba(6, 12, 34, 0.95), 0 0 14px rgba(6, 12, 34, 0.85);
+}
+.ag-const-meta {
+    margin-top: -2px;
+    font: 500 1.04rem/1 var(--pearl-mono);
+    color: rgba(220, 235, 255, 0.88);
+    text-shadow: 0 1px 8px rgba(6, 12, 34, 0.95);
+}
+
+/* ---------- 模式二：星月关系图谱（月亮中心 · 大发光分类圆点 · 默认星星→悬停/点击显图标） ---------- */
+.ag-graph-svg {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    height: 100%;
+    display: block;
+    overflow: visible;
+}
+.ag-graph-svg[hidden] { display: none; }
+
+.ag-graph-orbit {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.16);
+    stroke-width: 1;
+    stroke-dasharray: 3 8;
+    pointer-events: none;
+}
+.ag-graph-orbit.is-outer {
+    stroke: rgba(210, 228, 255, 0.14);
+    stroke-dasharray: 8 10 2 10;
+    transform-box: view-box;
+    transform-origin: center;
+    animation: ag-constellation-spin 110s linear infinite;
+}
+
+@keyframes ag-constellation-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+@keyframes ag-edge-flow {
+    from { stroke-dashoffset: 24; }
+    to { stroke-dashoffset: 0; }
+}
+@keyframes ag-moon-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.62; }
+    50% { transform: scale(1.09); opacity: 0.94; }
+}
+@keyframes ag-beacon-breath {
+    0%, 100% { transform: scale(1); opacity: 0.88; }
+    50% { transform: scale(1.07); opacity: 1; }
+}
+
+.ag-graph-edge {
+    stroke: rgba(235, 244, 255, 0.34);
+    stroke-width: 1.2;
+    stroke-linecap: round;
+    transition: stroke 0.24s ease, stroke-width 0.24s ease, opacity 0.24s ease;
+}
+.ag-graph-edge.is-tag-link {
+    stroke: rgba(216, 228, 255, 0.26);
+    stroke-dasharray: 4 5;
+}
+.ag-graph-edge.is-highlight {
+    stroke: url(#ag-graph-edge-glow);
+    stroke-width: 2.3;
+    stroke-dasharray: 6 6;
+    filter: drop-shadow(0 0 6px rgba(178, 212, 255, 0.9));
+    animation: ag-edge-flow 1.3s linear infinite;
+}
+.ag-graph-edge.is-dim { opacity: 0.12; }
+
+.ag-graph-node {
+    cursor: grab;
+    transition: opacity 0.22s ease;
+}
+.ag-graph-node:active { cursor: grabbing; }
+.ag-graph-node.is-dim { opacity: 0.32; }
+
+.ag-graph-halo {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.28);
+    stroke-width: 1.1;
+    stroke-dasharray: 3 4;
+    transition: transform 0.25s ease, stroke 0.25s ease;
+    pointer-events: none;
+}
+
+/* 中心月亮节点 */
+.ag-graph-node.is-hub .ag-graph-halo {
+    stroke: rgba(244, 236, 255, 0.56);
+    animation: ag-moon-pulse 4.5s ease-in-out infinite;
+}
+.ag-graph-hub-ring {
+    fill: none;
+    stroke: url(#ag-graph-ring-grad);
+    stroke-width: 1.4;
+    opacity: 0.78;
+    pointer-events: none;
+}
+.ag-moon-aura {
+    fill: url(#ag-graph-moon-aura);
+    pointer-events: none;
+}
+.ag-moon-crescent {
+    fill: url(#ag-graph-moon-grad);
+    stroke: rgba(255, 255, 255, 0.9);
+    stroke-width: 1.2;
+    filter: drop-shadow(0 0 18px rgba(226, 228, 255, 0.95)) drop-shadow(0 0 34px rgba(164, 186, 255, 0.65));
+}
+
+/* 分类节点：与星星同色（纯白全亮）的发光圆形 */
+.ag-graph-node.is-tag .ag-graph-circle {
+    fill: #ffffff;
+    stroke: #ffffff;
+    stroke-width: 1;
+    filter: drop-shadow(0 0 10px rgba(215, 234, 255, 0.92)) drop-shadow(0 0 4px rgba(255, 255, 255, 0.85));
+    transition: transform 0.22s ease, filter 0.22s ease;
+}
+.ag-graph-node.is-tag:hover .ag-graph-circle,
+.ag-graph-node.is-tag.is-highlight .ag-graph-circle {
+    fill: #ffffff;
+    stroke: #ffffff;
+    filter: drop-shadow(0 0 16px rgba(220, 238, 255, 1)) drop-shadow(0 0 6px #ffffff);
+}
+
+/* 友链站点：默认显示闪烁星星，悬停 / 选中时平滑淡入徽章/自定义图标 */
+.ag-friend-star {
+    transition: transform 0.26s ease, opacity 0.24s ease;
+    pointer-events: none;
+}
+.ag-friend-badge {
+    opacity: 0;
+    transform: scale(0.45);
+    transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.22s ease;
+    pointer-events: none;
+}
+.ag-graph-node.is-friend:hover .ag-friend-star,
+.ag-graph-node.is-friend.is-selected .ag-friend-star {
+    opacity: 0;
+    transform: scale(1.38) rotate(16deg);
+}
+.ag-graph-node.is-friend:hover .ag-friend-badge,
+.ag-graph-node.is-friend.is-selected .ag-friend-badge {
+    opacity: 1;
+    transform: scale(1.08);
+}
+
+.ag-graph-node.is-friend .ag-graph-circle {
+    stroke: rgba(255, 255, 255, 0.92);
+    stroke-width: 1.8;
+    filter: drop-shadow(0 4px 14px rgba(18, 28, 68, 0.5));
+}
+.ag-graph-glyph {
+    fill: #fff;
+    font: 700 10.5px/1 var(--pearl-mono);
+    text-anchor: middle;
+    dominant-baseline: central;
+    pointer-events: none;
+    text-shadow: 0 1px 4px rgba(10, 16, 42, 0.7);
+}
+
+.ag-graph-node:hover .ag-graph-halo,
+.ag-graph-node.is-highlight .ag-graph-halo {
+    stroke: rgba(255, 255, 255, 0.9);
+    transform: scale(1.18);
+}
+
+.ag-graph-label {
+    fill: #fff;
+    font: 600 12.5px/1 var(--ag-font);
+    text-anchor: middle;
+    pointer-events: none;
+    paint-order: stroke;
+    stroke: rgba(14, 22, 52, 0.8);
+    stroke-width: 3.6px;
+    stroke-linejoin: round;
+}
+.ag-graph-node.is-tag .ag-graph-label { fill: #eef4ff; font: 600 11.4px/1 var(--pearl-mono); }
+.ag-graph-node.is-hub .ag-graph-label { fill: #fff; font: 700 14.5px/1 var(--pearl-serif); }
+
+/* 选中友链浮层：共用无框透明卡片 */
+.ag-graph-card {
+    position: absolute;
+    left: 14px;
+    bottom: 14px;
+    z-index: 8;
+    width: min(350px, calc(100% - 28px));
+    padding: 12px 14px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    color: #fff;
+    text-shadow: 0 1px 10px rgba(6, 12, 34, 0.94), 0 0 18px rgba(6, 12, 34, 0.72);
+}
+.ag-graph-card[hidden] { display: none; }
+.ag-graph-card-head { display: flex; align-items: center; justify-content: flex-start; gap: 10px; }
+.ag-graph-card-icon { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; border: 1px solid rgba(255, 255, 255, 0.72); flex-shrink: 0; }
+.ag-graph-card-icon[hidden] { display: none; }
+.ag-graph-card-title { margin: 0; font: 700 1.65rem/1.3 var(--pearl-serif); color: #fff; }
+.ag-graph-card-close { border: 0; background: transparent; color: rgba(240, 246, 255, 0.9); font-size: 1.8rem; cursor: pointer; line-height: 1; text-shadow: inherit; }
+.ag-graph-card-host { font: 500 1.1rem/1.2 var(--pearl-mono); color: rgba(214, 232, 255, 0.92); }
+.ag-graph-card-desc { margin: 0; font-size: 1.3rem; line-height: 1.55; color: rgba(246, 250, 255, 0.96); }
+.ag-graph-card-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.ag-graph-card-tag { padding: 2px 9px; border-radius: 999px; background: rgba(255, 255, 255, 0.14); font: 500 1.1rem/1.3 var(--pearl-mono); color: #fff; }
+.ag-graph-card-visit { align-self: flex-start; margin-top: 2px; padding: 4px 0; color: #dbe8ff; font-size: 1.28rem; font-weight: 700; text-decoration: underline; text-underline-offset: .32em; transition: opacity 0.2s, transform 0.2s; }
+.ag-graph-card-visit:hover { opacity: 0.85; transform: translateX(2px); }
+.ag-graph-card-visit[hidden] { display: none; }
+
+.ag-links-empty {
+    position: absolute;
+    left: 50%;
+    top: 62%;
+    transform: translate(-50%, -50%);
+    z-index: 6;
+    max-width: min(460px, calc(100% - 32px));
+    padding: 16px 24px;
+    border-radius: 18px;
+    border: 1px solid var(--pearl-header-edge);
+    background: var(--pearl-header-surface);
+    backdrop-filter: var(--pearl-header-blur);
+    -webkit-backdrop-filter: var(--pearl-header-blur);
+    box-shadow: var(--pearl-header-shadow);
+    color: #fff;
+    text-shadow: var(--pearl-header-text-shadow);
+    font: 600 1.45rem/1.6 var(--ag-font);
+    text-align: center;
+    pointer-events: auto;
+}
+
+/* 交换友链说明：无框透明 + Markdown 引用语法风格 */
+.ag-links-note {
+    margin-top: 18px;
+    padding: 8px 4px 4px;
+    border: 0;
+    background: transparent;
+    color: rgba(250, 252, 255, 0.98);
+    text-shadow: 0 1px 10px rgba(6, 12, 34, 0.88), 0 1px 3px rgba(6, 12, 34, 0.92);
+}
+.ag-links-shell .ag-links-note h2,
+.ag-links-shell .ag-links-note h3 { color: #fff; margin: 0 0 12px; font: 700 2rem/1.35 var(--pearl-serif); }
+.ag-links-note blockquote {
+    position: relative;
+    margin: 0;
+    padding: 12px 18px 12px 24px;
+    border: 0;
+    border-inline-start: 2px solid rgba(195, 214, 255, 0.35);
+    background: transparent;
+    color: rgba(248, 251, 255, 0.96);
+}
+.ag-links-note blockquote::before {
+    content: "";
+    position: absolute;
+    inset: 6px auto 6px -2px;
+    width: 3px;
+    border-radius: 99px;
+    background: linear-gradient(180deg, #8fa8ff, #d4b8ff);
+    box-shadow: 0 0 10px rgba(143, 168, 255, 0.78);
+}
+.ag-links-note blockquote p { margin: 0; line-height: 1.75; font-size: 1.45rem; }
+.ag-links-note blockquote p + p { margin-top: 6px; }
+.ag-links-note:empty { display: none; }
+
+@media (max-width: 720px) {
+    .ag-graph-hud { right: 14px; }
+    .ag-graph-actions { top: 76px; left: 14px; right: 14px; justify-content: flex-start; }
+    .ag-const-back-btn { top: 122px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ag-graph-orbit.is-outer,
+    .ag-graph-edge.is-highlight,
+    .ag-graph-node.is-hub .ag-graph-halo,
+    .ag-tag-corona { animation: none; }
+}

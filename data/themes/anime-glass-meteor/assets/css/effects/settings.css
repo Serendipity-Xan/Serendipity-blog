@@ -1,0 +1,105 @@
+/* 统一保持壁纸原色，不叠加黄昏/星空/黎明色罩。 */
+
+.ag-effects-trigger:not([hidden]) {
+    position: fixed;
+    z-index: 90;
+    right: max(16px, env(safe-area-inset-right));
+    bottom: max(16px, env(safe-area-inset-bottom));
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 44px;
+    padding: 0 14px;
+    border: 1px solid var(--floating-edge);
+    border-radius: 999px;
+    background: var(--floating-glass);
+    color: var(--floating-ink);
+    box-shadow: var(--gallery-shadow);
+    backdrop-filter: blur(10px);
+    font: 600 1.4rem var(--ag-font);
+    cursor: pointer;
+}
+
+.ag-effects-trigger svg { color: var(--accent-strong); }
+.ag-effects-trigger:hover { background: var(--floating-glass-hover); }
+
+.ag-effects-dialog {
+    position: fixed;
+    inset: auto max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) auto;
+    width: min(410px, calc(calc(100 * var(--ag-vw)) - 32px));
+    max-height: calc(calc(100 * var(--ag-svh)) - 32px);
+    margin: 0;
+    padding: 21px;
+    overflow: auto;
+    border: 1px solid #6e7da2;
+    border-radius: 21px;
+    background: linear-gradient(155deg, #26304d, #171e35 55%);
+    color: #f2f3ff;
+    box-shadow: 0 20px 60px rgba(6, 10, 24, 0.42);
+    font: 1.5rem/1.45 var(--ag-font);
+    color-scheme: dark;
+    accent-color: #ecb1d3;
+}
+
+.ag-effects-dialog::backdrop { background: rgba(6, 10, 24, 0.47); }
+
+.ag-effects-heading, .ag-effects-row, .ag-effects-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.ag-effects-heading h2 { margin: 0; color: inherit; font-size: 2rem; }
+.ag-effects-close, .ag-effects-reset {
+    border: 1px solid #6e7da2;
+    border-radius: 10px;
+    background: #273451;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+}
+
+.ag-effects-close { width: 36px; height: 36px; padding: 0; font-size: 2rem; }
+.ag-effects-reset { min-height: 36px; padding: 5px 10px; white-space: nowrap; }
+.ag-effects-close:hover, .ag-effects-reset:hover { background: #394768; }
+.ag-effects-trigger:focus-visible, .ag-effects-dialog :focus-visible {
+    outline: 2px solid #efd2f0;
+    outline-offset: 3px;
+}
+
+.ag-effects-form { display: grid; gap: 12px; margin-top: 14px; }
+.ag-effects-row { min-height: 38px; }
+.ag-effects-master { font-weight: 700; }
+.ag-effects-row input { width: 20px; height: 20px; margin: 0; }
+.ag-effects-sky-options {
+    padding: 3px 12px;
+    border: 1px solid #566381;
+    border-radius: 12px;
+    background: rgba(171, 188, 238, 0.07);
+}
+.ag-effects-tone select {
+    min-height: 38px;
+    padding: 4px 9px;
+    border: 1px solid #6e7da2;
+    border-radius: 9px;
+    background: #273451;
+    color: inherit;
+    font: inherit;
+}
+
+.ag-effects-strength {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 5px 12px;
+}
+
+.ag-effects-strength input { grid-column: 1 / -1; width: 100%; margin: 0; }
+.ag-effects-strength output, .ag-effects-footer p { color: #c6cee8; }
+.ag-effects-footer { border-top: 1px solid #566381; padding-top: 12px; }
+.ag-effects-footer p { margin: 0; font-size: 1.3rem; }
+
+.ag-effects-advanced { border-top: 1px solid #566381; padding-top: 9px; }
+.ag-effects-advanced summary { cursor: pointer; padding: 4px 0; }
+.ag-effects-advanced > div { padding-left: 10px; }
+.ag-effects-tilt { margin-bottom: 6px; }
